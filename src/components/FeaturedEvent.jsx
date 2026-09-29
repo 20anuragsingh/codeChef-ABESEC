@@ -5,7 +5,11 @@ import {
   MapPin, 
   Trophy, 
   Users, 
-  Flame
+  Flame, 
+  Eye, 
+  Award,
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 
 export const FeaturedEvent = ({ event, registrationCount, onRegister, onViewDetails }) => {
@@ -47,111 +51,122 @@ export const FeaturedEvent = ({ event, registrationCount, onRegister, onViewDeta
   const isPast = event.status === 'Completed' || new Date(event.dateTimeIso || event.date) < new Date();
 
   return (
-    <section id="featured-event-section" className="py-10">
+    <section id="featured-event-section" className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <div className="flex items-center gap-1.5 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-1">
-              <Flame className="w-4 h-4" />
-              <span>Spotlight</span>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Featured Event
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <span className="p-1 rounded-md bg-amber-50 text-amber-600">
+              <Flame className="w-4 h-4 fill-amber-500" />
+            </span>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">
+              Featured Opportunity
             </h2>
+            <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EBF3FC] text-[#0073E6]">
+              High Impact
+            </span>
           </div>
-          <span className="hidden sm:inline-block px-3 py-1 text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200 rounded-full">
-            Flagship Event
-          </span>
+
+          <button
+            onClick={() => onViewDetails(event)}
+            className="text-xs font-semibold text-[#0073E6] hover:text-[#005bb5] flex items-center gap-1"
+          >
+            <span>View Opportunity Guidelines</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
         </div>
 
-        {/* Featured Card */}
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs">
+        {/* Unstop Spotlight Opportunity Card */}
+        <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
             
-            {/* Visual Image */}
-            <div className="lg:col-span-5 relative min-h-[220px] sm:min-h-[280px] bg-gray-100">
+            {/* Visual Column */}
+            <div className="lg:col-span-5 relative min-h-[220px] sm:min-h-[280px] bg-gray-100 overflow-hidden">
               <img 
                 src={event.bannerImage || "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80"} 
                 alt={event.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-3 left-3 flex gap-2">
-                <span className="px-2.5 py-1 rounded text-xs font-semibold bg-white text-gray-900 shadow-xs border border-gray-200">
+              <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+                <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-[#DEF7EC] text-[#03543F] border border-green-200 shadow-xs">
+                  Free Entry
+                </span>
+                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-xs border border-gray-200">
                   {event.category}
                 </span>
-                <span className="px-2.5 py-1 rounded text-xs font-medium bg-gray-900 text-white">
-                  {event.mode || 'Offline'}
+              </div>
+
+              <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-white bg-black/60 backdrop-blur-xs px-3 py-1.5 rounded-xl">
+                <span className="flex items-center gap-1">
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>{event.impressions || '2.4k Views'}</span>
                 </span>
+                <span>Team Size: {event.teamSize || '1 - 4 Members'}</span>
               </div>
             </div>
 
-            {/* Event Details */}
-            <div className="lg:col-span-7 p-6 sm:p-8 flex flex-col justify-between">
+            {/* Info Column */}
+            <div className="lg:col-span-7 p-6 sm:p-7 flex flex-col justify-between">
               <div>
                 
-                {/* Countdown display */}
+                {/* Countdown Timer Pill */}
                 {!isPast && (
-                  <div className="mb-4 p-3 bg-gray-50 border border-gray-200 rounded-lg flex items-center justify-between flex-wrap gap-2 text-xs">
-                    <span className="font-medium text-gray-600 flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-blue-600" />
-                      Starts in:
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 border border-amber-200 text-xs text-amber-800 mb-3">
+                    <Clock className="w-3.5 h-3.5 text-amber-600" />
+                    <span className="font-semibold">Registration Closes in:</span>
+                    <span className="font-mono font-bold text-amber-900">
+                      {timeLeft.days}d : {String(timeLeft.hours).padStart(2, '0')}h : {String(timeLeft.minutes).padStart(2, '0')}m : {String(timeLeft.seconds).padStart(2, '0')}s
                     </span>
-                    <div className="flex items-center gap-2 font-medium text-gray-900">
-                      <span className="px-2 py-0.5 bg-white border border-gray-200 rounded">{timeLeft.days}d</span>
-                      <span>:</span>
-                      <span className="px-2 py-0.5 bg-white border border-gray-200 rounded">{String(timeLeft.hours).padStart(2, '0')}h</span>
-                      <span>:</span>
-                      <span className="px-2 py-0.5 bg-white border border-gray-200 rounded">{String(timeLeft.minutes).padStart(2, '0')}m</span>
-                      <span>:</span>
-                      <span className="px-2 py-0.5 bg-white border border-gray-200 rounded text-blue-600 font-bold">{String(timeLeft.seconds).padStart(2, '0')}s</span>
-                    </div>
                   </div>
                 )}
 
-                {/* Event Title */}
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 leading-snug">
+                {/* Opportunity Title */}
+                <h3 className="text-xl sm:text-2xl font-bold text-[#1C4980] leading-snug">
                   {event.title}
                 </h3>
 
-                {/* Meta Information */}
-                <div className="mt-3 flex flex-wrap items-center gap-4 text-xs text-gray-600">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar className="w-4 h-4 text-blue-600" />
-                    <span>{event.date} at {event.time}</span>
+                <p className="text-xs text-gray-500 mt-1">
+                  Organized by <strong className="text-gray-800">{event.organizer}</strong> • {event.college}
+                </p>
+
+                {/* Key Chips */}
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-gray-700">
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                    <Calendar className="w-4 h-4 text-[#0073E6] shrink-0" />
+                    <span><strong>Date:</strong> {event.date} ({event.time})</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 text-blue-600" />
-                    <span>{event.venue}</span>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                    <MapPin className="w-4 h-4 text-[#0073E6] shrink-0" />
+                    <span className="truncate"><strong>Venue:</strong> {event.venue}</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                    <Trophy className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span className="truncate"><strong>Prizes:</strong> {event.prizes}</span>
+                  </div>
+                  <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                    <Award className="w-4 h-4 text-green-600 shrink-0" />
+                    <span className="truncate"><strong>Eligibility:</strong> {event.eligibility}</span>
                   </div>
                 </div>
 
-                {/* Description */}
-                <p className="mt-3 text-sm text-gray-600 leading-relaxed line-clamp-3">
-                  {event.description}
+                {/* Description snippet */}
+                <p className="mt-3.5 text-xs sm:text-sm text-gray-600 line-clamp-2 leading-relaxed">
+                  {event.shortDescription || event.description}
                 </p>
 
-                {/* Perks */}
-                {event.prizes && (
-                  <div className="mt-3 p-2.5 rounded-lg bg-blue-50/70 border border-blue-100 flex items-center gap-2 text-xs text-blue-900">
-                    <Trophy className="w-4 h-4 text-blue-600 shrink-0" />
-                    <span><strong>Prizes:</strong> {event.prizes}</span>
-                  </div>
-                )}
-
-                {/* Capacity Progress Bar */}
+                {/* Registration Count Bar */}
                 <div className="mt-4">
                   <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center gap-1 font-medium">
                       <Users className="w-3.5 h-3.5 text-gray-400" />
-                      <span>{registeredCount} of {capacity} seats registered</span>
+                      <span>{registeredCount} students registered of {capacity} seats</span>
                     </span>
                     <span className="font-semibold text-gray-700">{percentFull}% filled</span>
                   </div>
-                  <div className="w-full h-2 rounded-full bg-gray-200 overflow-hidden">
+                  <div className="w-full h-1.5 rounded-full bg-gray-100 overflow-hidden">
                     <div 
-                      className="h-full bg-blue-600 rounded-full transition-all duration-300"
+                      className="h-full bg-[#0073E6] rounded-full transition-all duration-300"
                       style={{ width: `${percentFull}%` }}
                     />
                   </div>
@@ -159,27 +174,27 @@ export const FeaturedEvent = ({ event, registrationCount, onRegister, onViewDeta
 
               </div>
 
-              {/* Actions */}
-              <div className="mt-6 pt-5 border-t border-gray-100 flex flex-wrap items-center gap-3">
+              {/* Actions Footer */}
+              <div className="mt-6 pt-4 border-t border-gray-100 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => onRegister(event)}
                   disabled={isPast || percentFull >= 100}
-                  className={`px-5 py-2.5 rounded-lg font-semibold text-sm transition-colors ${
+                  className={`px-6 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-xs ${
                     isPast
                       ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
                       : percentFull >= 100
                       ? 'bg-gray-100 text-gray-500 cursor-not-allowed border border-gray-200'
-                      : 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-[#0073E6] hover:bg-[#0060c0] text-white hover:shadow'
                   }`}
                 >
-                  {isPast ? 'Event Ended' : percentFull >= 100 ? 'Event Full' : 'Register Now'}
+                  {isPast ? 'Opportunity Closed' : percentFull >= 100 ? 'Seats Full' : 'Register on Unstop Style'}
                 </button>
 
                 <button
                   onClick={() => onViewDetails(event)}
-                  className="px-4 py-2.5 rounded-lg font-medium text-sm text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 transition-colors"
+                  className="px-5 py-2.5 rounded-full font-semibold text-xs sm:text-sm text-[#1C4980] bg-white hover:bg-gray-50 border border-gray-300 transition-colors"
                 >
-                  View Details
+                  View Details & Rounds
                 </button>
               </div>
 

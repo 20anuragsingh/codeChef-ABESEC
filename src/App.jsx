@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { 
   getEvents, 
   getRegistrations, 
@@ -26,10 +26,12 @@ import { EventFormModal } from './components/EventFormModal';
 import { Footer } from './components/Footer';
 
 import { 
-  Calendar, 
+  Trophy, 
   ArrowRight, 
   CheckCircle2, 
-  Search
+  Search, 
+  Flame, 
+  SlidersHorizontal 
 } from 'lucide-react';
 
 export default function App() {
@@ -47,10 +49,11 @@ export default function App() {
   // Toast feedback state
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Search & Filter state for Events Page
+  // Search & Filter state for Opportunities Page
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState('All Opportunities');
   const [selectedStatus, setSelectedStatus] = useState('All');
+  const [selectedMode, setSelectedMode] = useState('All');
 
   // Load initial data and subscribe to storage changes
   useEffect(() => {
@@ -94,16 +97,17 @@ export default function App() {
       .slice(0, 3);
   }, [events]);
 
-  // Filtered events for Events Page
+  // Filtered events for Opportunities Page
   const filteredEvents = useMemo(() => {
     return events.filter((e) => {
       const matchesSearch = 
         e.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (e.description && e.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (e.venue && e.venue.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (e.eligibility && e.eligibility.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (e.tags && e.tags.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase())));
 
-      const matchesCategory = selectedCategory === 'All' || e.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'All Opportunities' || e.category === selectedCategory;
       
       const isPast = e.status === 'Completed' || new Date(e.dateTimeIso || e.date) < new Date();
       const matchesStatus = 
@@ -111,14 +115,16 @@ export default function App() {
         (selectedStatus === 'Upcoming' && !isPast) ||
         (selectedStatus === 'Completed' && isPast);
 
-      return matchesSearch && matchesCategory && matchesStatus;
+      const matchesMode = selectedMode === 'All' || e.mode === selectedMode;
+
+      return matchesSearch && matchesCategory && matchesStatus && matchesMode;
     });
-  }, [events, searchTerm, selectedCategory, selectedStatus]);
+  }, [events, searchTerm, selectedCategory, selectedStatus, selectedMode]);
 
   // Handlers for Registration
   const handleRegisterSubmit = (payload) => {
     const newReg = registerStudentForEvent(payload);
-    showToast(`Registered for ${payload.eventTitle}!`);
+    showToast(`Application submitted for ${payload.eventTitle}!`);
     return newReg;
   };
 
@@ -136,43 +142,43 @@ export default function App() {
   const handleSaveEvent = (payload) => {
     if (editingEvent && editingEvent.id) {
       updateEvent(editingEvent.id, payload);
-      showToast('Event updated successfully.');
+      showToast('Opportunity updated successfully.');
     } else {
       addEvent(payload);
-      showToast('New event created.');
+      showToast('New opportunity published on Unstop!');
     }
   };
 
   const handleDeleteEvent = (id) => {
     deleteEvent(id);
-    showToast('Event removed.');
+    showToast('Opportunity removed.');
   };
 
   const handleDeleteRegistration = (id) => {
     deleteRegistration(id);
-    showToast('Registration deleted.');
+    showToast('Application cancelled.');
   };
 
   const handleToggleAttendance = (id) => {
     const updated = toggleRegistrationAttendance(id);
-    showToast(updated.attended ? 'Marked present.' : 'Attendance unmarked.');
+    showToast(updated.attended ? 'Candidate marked present.' : 'Attendance removed.');
   };
 
   const handleResetData = () => {
-    if (window.confirm('Reset all events and registrations to default demo data?')) {
+    if (window.confirm('Reset all opportunities and applications to default demo data?')) {
       resetToDemoData();
       showToast('Reset to demo data.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#F7F9FB] text-gray-900 flex flex-col font-sans">
       
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 animate-in slide-in-from-bottom-5 duration-200">
-          <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-gray-300 text-gray-900 shadow-md text-xs sm:text-sm font-medium">
-            <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1C4980] text-white shadow-lg text-xs sm:text-sm font-semibold">
+            <CheckCircle2 className="w-4 h-4 text-cyan-300 shrink-0" />
             <span>{toastMessage.message}</span>
           </div>
         </div>
@@ -184,6 +190,10 @@ export default function App() {
         setCurrentView={setCurrentView}
         eventCount={events.length}
         registrationCount={registrations.length}
+        onSearchClick={() => {
+          const el = document.getElementById('search-input');
+          if (el) el.focus();
+        }}
       />
 
       {/* Main Content */}
@@ -193,7 +203,7 @@ export default function App() {
         {currentView === 'home' && (
           <div>
             
-            {/* Hero Section */}
+            {/* Unstop Organizer Profile Header */}
             <Hero 
               onExploreEvents={() => setCurrentView('events')}
               onScrollToFeatured={() => {
@@ -206,7 +216,7 @@ export default function App() {
               }}
             />
 
-            {/* Featured Event Spotlight */}
+            {/* Featured Opportunity Spotlight */}
             {featuredEvent && (
               <FeaturedEvent 
                 event={featuredEvent}
@@ -216,28 +226,28 @@ export default function App() {
               />
             )}
 
-            {/* Upcoming Events Preview */}
-            <section className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Live & Upcoming Opportunities Grid Preview */}
+            <section className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <div>
-                  <div className="flex items-center gap-1.5 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-0.5">
-                    <Calendar className="w-3.5 h-3.5" />
-                    <span>Schedule</span>
+                  <div className="flex items-center gap-1.5 text-[#0073E6] text-xs font-bold uppercase tracking-wider mb-0.5">
+                    <Trophy className="w-3.5 h-3.5" />
+                    <span>Live & Upcoming</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    Upcoming Events
+                  <h2 className="text-xl sm:text-2xl font-bold text-[#1C4980]">
+                    Campus Opportunities
                   </h2>
                 </div>
                 <button
                   onClick={() => setCurrentView('events')}
-                  className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0073E6] hover:text-[#005bb5] transition-colors"
                 >
-                  <span>View All ({events.length})</span>
+                  <span>Explore All {events.length} Opportunities</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {upcomingEvents.map((evt) => (
                   <EventCard 
                     key={evt.id}
@@ -250,7 +260,7 @@ export default function App() {
               </div>
             </section>
 
-            {/* Club Introduction */}
+            {/* Club Introduction & FAQs */}
             <ClubIntroduction 
               onExploreEvents={() => setCurrentView('events')}
             />
@@ -258,16 +268,19 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 2: EVENTS PAGE */}
+        {/* VIEW 2: ALL OPPORTUNITIES PAGE */}
         {currentView === 'events' && (
-          <div className="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-8 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="mb-6">
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                All Campus Events
+              <div className="flex items-center gap-1.5 text-[#0073E6] text-xs font-bold uppercase tracking-wider mb-1">
+                <span>CodeChef ABESEC Opportunity Hub</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold text-[#1C4980]">
+                All Opportunities & Contests
               </h1>
-              <p className="text-sm text-gray-600 mt-1 max-w-xl">
-                Browse and register for hackathons, workshops, and coding contests organized by CodeChef ABESEC.
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 max-w-xl">
+                Browse hackathons, coding challenges, workshops, and speaker sessions. Apply online, compete, and receive verified certificates.
               </p>
             </div>
 
@@ -279,30 +292,33 @@ export default function App() {
               setSelectedCategory={setSelectedCategory}
               selectedStatus={selectedStatus}
               setSelectedStatus={setSelectedStatus}
+              selectedMode={selectedMode}
+              setSelectedMode={setSelectedMode}
               totalResults={filteredEvents.length}
             />
 
-            {/* Event Cards Grid */}
+            {/* Opportunity Cards Grid */}
             {filteredEvents.length === 0 ? (
-              <div className="py-16 text-center bg-white border border-gray-200 rounded-xl p-6">
+              <div className="py-16 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
                 <Search className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <h3 className="text-base font-semibold text-gray-900">No events found</h3>
+                <h3 className="text-base font-bold text-[#1C4980]">No opportunities found</h3>
                 <p className="text-xs text-gray-500 mt-1">
-                  Try adjusting your search query or selected category filter.
+                  Try adjusting your search query, mode, or category filters.
                 </p>
                 <button
                   onClick={() => {
                     setSearchTerm('');
-                    setSelectedCategory('All');
+                    setSelectedCategory('All Opportunities');
                     setSelectedStatus('All');
+                    setSelectedMode('All');
                   }}
-                  className="mt-4 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                  className="mt-4 px-4 py-2 rounded-full text-xs font-bold bg-[#0073E6] text-white hover:bg-[#0060c0] transition-colors"
                 >
-                  Clear Filters
+                  Clear All Filters
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {filteredEvents.map((evt) => (
                   <EventCard 
                     key={evt.id}
@@ -327,7 +343,7 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 4: ADMIN DASHBOARD */}
+        {/* VIEW 4: ADMIN / HOST DASHBOARD */}
         {currentView === 'admin' && (
           <AdminDashboard 
             events={events}
@@ -369,7 +385,7 @@ export default function App() {
         onRegister={(evt) => setRegisterEvent(evt)}
       />
 
-      {/* DIGITAL TICKET PASS MODAL */}
+      {/* DIGITAL TICKET / E-PASS MODAL */}
       {ticketModalState && (
         <TicketModal 
           isOpen={Boolean(ticketModalState)}

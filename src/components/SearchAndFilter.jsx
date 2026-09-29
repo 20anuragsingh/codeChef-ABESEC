@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, Filter } from 'lucide-react';
+import { Search, X, SlidersHorizontal, Sparkles, MapPin, Globe } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../data/mockEvents';
 
 export const SearchAndFilter = ({ 
@@ -9,30 +9,33 @@ export const SearchAndFilter = ({
   setSelectedCategory,
   selectedStatus,
   setSelectedStatus,
+  selectedMode,
+  setSelectedMode,
   totalResults
 }) => {
-  const hasActiveFilters = searchTerm !== '' || selectedCategory !== 'All' || selectedStatus !== 'All';
+  const hasActiveFilters = searchTerm !== '' || selectedCategory !== 'All Opportunities' || selectedStatus !== 'All' || selectedMode !== 'All';
 
   const clearAllFilters = () => {
     setSearchTerm('');
-    setSelectedCategory('All');
+    setSelectedCategory('All Opportunities');
     setSelectedStatus('All');
+    if (setSelectedMode) setSelectedMode('All');
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 shadow-xs mb-8 space-y-4">
+    <div className="bg-white border border-gray-200 rounded-2xl p-4 sm:p-5 shadow-xs mb-8 space-y-4">
       
-      {/* Top Search Input */}
+      {/* Search Input Bar */}
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
-          <Search className="w-4 h-4" />
+          <Search className="w-4 h-4 text-[#0073E6]" />
         </div>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search events by name, keywords, venue, or topics..."
-          className="w-full pl-10 pr-9 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+          placeholder="Search by opportunity name, venue, eligibility, or keywords..."
+          className="w-full pl-10 pr-9 py-2.5 bg-gray-50 hover:bg-white focus:bg-white border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#0073E6] focus:border-transparent transition-all"
         />
         {searchTerm && (
           <button
@@ -45,41 +48,60 @@ export const SearchAndFilter = ({
         )}
       </div>
 
-      {/* Filter Row */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-1">
-        
-        {/* Category Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
-          <div className="text-xs font-semibold text-gray-500 mr-1 flex items-center gap-1 shrink-0">
-            <Filter className="w-3.5 h-3.5 text-blue-600" />
-            <span>Category:</span>
-          </div>
+      {/* Category Pills (Unstop style) */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+        {EVENT_CATEGORIES.map((cat) => {
+          const isSelected = selectedCategory === cat;
+          return (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all border ${
+                isSelected
+                  ? 'bg-[#1C4980] text-white border-[#1C4980] shadow-xs'
+                  : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 hover:border-gray-300'
+              }`}
+            >
+              {cat}
+            </button>
+          );
+        })}
+      </div>
 
-          {EVENT_CATEGORIES.map((cat) => {
-            const isSelected = selectedCategory === cat;
+      {/* Secondary Quick Filter Pills & Status */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-gray-100">
+        
+        {/* Mode filter pills */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-semibold text-gray-500 mr-1 flex items-center gap-1">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-[#0073E6]" />
+            <span>Mode:</span>
+          </span>
+
+          {['All', 'In Campus (Offline)', 'Online', 'Hybrid'].map((mode) => {
+            const isSelected = (selectedMode || 'All') === mode;
             return (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors border ${
+                key={mode}
+                onClick={() => setSelectedMode && setSelectedMode(mode)}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                   isSelected
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                    ? 'bg-[#EBF3FC] text-[#0073E6] font-bold border border-blue-200'
+                    : 'bg-gray-50 text-gray-600 border border-gray-200 hover:bg-gray-100'
                 }`}
               >
-                {cat}
+                {mode === 'In Campus (Offline)' ? 'In Campus' : mode}
               </button>
             );
           })}
         </div>
 
         {/* Status Toggle & Reset */}
-        <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
-          
-          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg border border-gray-200 text-xs">
+        <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-1 bg-gray-100 p-0.5 rounded-full border border-gray-200 text-xs">
             <button
               onClick={() => setSelectedStatus('All')}
-              className={`px-2.5 py-1 rounded font-medium transition-colors ${
+              className={`px-3 py-1 rounded-full font-medium transition-colors ${
                 selectedStatus === 'All' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
@@ -87,32 +109,31 @@ export const SearchAndFilter = ({
             </button>
             <button
               onClick={() => setSelectedStatus('Upcoming')}
-              className={`px-2.5 py-1 rounded font-medium transition-colors ${
-                selectedStatus === 'Upcoming' ? 'bg-white text-blue-600 font-semibold shadow-xs' : 'text-gray-600 hover:text-gray-900'
+              className={`px-3 py-1 rounded-full font-semibold transition-colors ${
+                selectedStatus === 'Upcoming' ? 'bg-[#0073E6] text-white shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Upcoming
+              Open Now
             </button>
             <button
               onClick={() => setSelectedStatus('Completed')}
-              className={`px-2.5 py-1 rounded font-medium transition-colors ${
+              className={`px-3 py-1 rounded-full font-medium transition-colors ${
                 selectedStatus === 'Completed' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              Past
+              Closed
             </button>
           </div>
 
           {hasActiveFilters && (
             <button
               onClick={clearAllFilters}
-              className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium transition-colors ml-1"
+              className="text-xs text-[#0073E6] hover:text-[#005bb5] flex items-center gap-1 font-semibold ml-1"
             >
               <X className="w-3.5 h-3.5" />
               <span>Reset</span>
             </button>
           )}
-
         </div>
 
       </div>
@@ -120,8 +141,8 @@ export const SearchAndFilter = ({
       {/* Results summary bar */}
       <div className="text-xs text-gray-500 pt-2 border-t border-gray-100 flex items-center justify-between">
         <span>
-          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'event' : 'events'}
-          {selectedCategory !== 'All' && <span> in <strong>{selectedCategory}</strong></span>}
+          Showing <strong className="text-[#1C4980]">{totalResults}</strong> opportunities
+          {selectedCategory !== 'All Opportunities' && <span> in <strong>{selectedCategory}</strong></span>}
           {searchTerm && <span> matching "<strong>{searchTerm}</strong>"</span>}
         </span>
       </div>
