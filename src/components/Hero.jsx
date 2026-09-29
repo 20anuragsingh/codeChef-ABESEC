@@ -1,135 +1,155 @@
 import React from 'react';
 import { 
-  Trophy, 
   Calendar, 
   Users, 
-  CheckCircle2, 
-  Star, 
-  Sparkles, 
-  ArrowRight,
-  MapPin,
-  Flame,
-  Award
+  Trophy, 
+  ArrowRight, 
+  MapPin, 
+  CheckCircle2,
+  Sparkles,
+  MessageCircle
 } from 'lucide-react';
 
 export const Hero = ({ onExploreEvents, onScrollToFeatured, stats }) => {
   return (
-    <section className="bg-white border-b border-gray-200">
-      
-      {/* Organizer Banner / Cover */}
-      <div className="h-28 sm:h-36 bg-gradient-to-r from-[#1C4980] via-[#0073E6] to-[#1C4980] relative">
-        <div className="absolute inset-0 bg-black/10" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 sm:-mt-14 pb-8">
+    <section className="bg-white border-b border-gray-200 py-10 sm:py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Organizer Header Card */}
-        <div className="bg-white rounded-2xl border border-gray-200 p-5 sm:p-7 shadow-xs">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-5">
+          {/* Main Info */}
+          <div className="lg:col-span-7 space-y-4">
             
-            {/* Logo & Org Details */}
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-white border-2 border-gray-100 shadow-sm flex items-center justify-center p-2 shrink-0">
-                <div className="w-full h-full bg-[#1C4980] rounded-xl flex items-center justify-center text-white font-bold text-xl sm:text-2xl shadow-xs">
-                  CC
-                </div>
-              </div>
-
-              <div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-xl sm:text-2xl font-bold text-[#1C4980]">
-                    CodeChef ABESEC Chapter
-                  </h1>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-semibold bg-blue-50 text-[#0073E6] border border-blue-200 px-2.5 py-0.5 rounded-full">
-                    <CheckCircle2 className="w-3.5 h-3.5 fill-[#0073E6] text-white" />
-                    Verified Campus Chapter
-                  </span>
-                </div>
-
-                <p className="text-xs sm:text-sm text-gray-600 mt-1 flex items-center gap-2">
-                  <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-                  <span>ABES Engineering College, Ghaziabad • AKTU Code 032</span>
-                </p>
-
-                <p className="text-xs sm:text-sm text-gray-500 mt-1.5 max-w-2xl leading-relaxed">
-                  The official student-run technical community at ABESEC. Participating in hackathons, CP sprints, workshops, and inter-college championships.
-                </p>
-              </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-blue-50 border border-blue-200 text-blue-800 text-xs font-medium">
+              <span className="w-2 h-2 rounded-full bg-blue-600"></span>
+              <span>CodeChef Campus Chapter • ABES Engineering College, Ghaziabad</span>
             </div>
 
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight">
+              Learn to Code, Build Projects & Crack Placements
+            </h1>
+
+            <p className="text-sm sm:text-base text-gray-600 max-w-xl leading-relaxed">
+              We are a student-run technical society at ABESEC. We organize 24-hour campus hackathons, rated coding contests, hands-on DSA workshops, and guidance sessions with placed 4th-year seniors.
+            </p>
+
             {/* CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-end md:self-center">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <button
                 onClick={onExploreEvents}
-                className="px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#0073E6] hover:bg-[#0060c0] text-white shadow-xs transition-colors flex items-center gap-1.5"
+                className="px-5 py-2.5 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-colors flex items-center gap-2 shadow-xs"
               >
-                <span>Browse Opportunities</span>
+                <span>View Campus Events</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
                 onClick={onScrollToFeatured}
-                className="px-4 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#EBF3FC] text-[#1C4980] hover:bg-blue-100 transition-colors flex items-center gap-1.5"
+                className="px-4 py-2.5 rounded-lg text-sm font-semibold bg-gray-100 hover:bg-gray-200 text-gray-800 transition-colors"
               >
-                <Flame className="w-4 h-4 text-amber-500" />
-                <span>Featured Challenge</span>
+                HackABES 2026
               </button>
+
+              <a
+                href="https://chat.whatsapp.com"
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2.5 rounded-lg text-sm font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 transition-colors flex items-center gap-1.5"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-600" />
+                <span>WhatsApp Group</span>
+              </a>
+            </div>
+
+            {/* Highlights */}
+            <div className="pt-3 flex flex-wrap items-center gap-5 text-xs text-gray-600">
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <span>Free Entry for All Branches</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <span>Official College Gate Passes</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-600" />
+                <span>Verified Certificates</span>
+              </div>
             </div>
 
           </div>
 
-          {/* Unstop Chapter Statistics Bar */}
-          <div className="mt-6 pt-5 border-t border-gray-100 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center sm:text-left">
-            
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#0073E6]">
-                <Calendar className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-base sm:text-lg font-bold text-gray-900 block leading-tight">
-                  {stats?.totalEvents || 45}+
+          {/* College Club Stats Box */}
+          <div className="lg:col-span-5">
+            <div className="bg-gray-50 border border-gray-200 rounded-2xl p-6 space-y-4">
+              
+              <div className="flex items-center justify-between pb-3 border-b border-gray-200">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
+                    ABES
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-gray-900">Chapter Highlights</h3>
+                    <p className="text-[11px] text-gray-500">Academic Year 2025-26</p>
+                  </div>
+                </div>
+                <span className="text-[11px] font-semibold px-2 py-0.5 rounded bg-blue-100 text-blue-800">
+                  Active
                 </span>
-                <span className="text-[11px] text-gray-500">Opportunities Hosted</span>
               </div>
-            </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-100 flex items-center justify-center text-green-600">
-                <Users className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-base sm:text-lg font-bold text-gray-900 block leading-tight">
-                  1,200+
-                </span>
-                <span className="text-[11px] text-gray-500">Active Participants</span>
-              </div>
-            </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3.5 bg-white rounded-xl border border-gray-200">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                    <Calendar className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Total Events</span>
+                  </div>
+                  <div className="text-xl font-bold text-gray-900">
+                    {stats?.totalEvents || 15}+
+                  </div>
+                  <p className="text-[11px] text-gray-500">Contests & bootcamps</p>
+                </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
-                <Trophy className="w-5 h-5" />
-              </div>
-              <div>
-                <span className="text-base sm:text-lg font-bold text-gray-900 block leading-tight">
-                  ₹1.5 Lakh+
-                </span>
-                <span className="text-[11px] text-gray-500">Prize Pool Awarded</span>
-              </div>
-            </div>
+                <div className="p-3.5 bg-white rounded-xl border border-gray-200">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                    <Users className="w-3.5 h-3.5 text-blue-600" />
+                    <span>Members</span>
+                  </div>
+                  <div className="text-xl font-bold text-gray-900">
+                    500+
+                  </div>
+                  <p className="text-[11px] text-gray-500">ABESEC students</p>
+                </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600">
-                <Star className="w-5 h-5 fill-purple-600 text-purple-600" />
-              </div>
-              <div>
-                <span className="text-base sm:text-lg font-bold text-gray-900 block leading-tight">
-                  4.9 / 5.0
-                </span>
-                <span className="text-[11px] text-gray-500">Student Satisfaction</span>
-              </div>
-            </div>
+                <div className="p-3.5 bg-white rounded-xl border border-gray-200">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                    <Trophy className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Prize Money</span>
+                  </div>
+                  <div className="text-xl font-bold text-gray-900">
+                    ₹75,000+
+                  </div>
+                  <p className="text-[11px] text-gray-500">Awarded to winners</p>
+                </div>
 
+                <div className="p-3.5 bg-white rounded-xl border border-gray-200">
+                  <div className="flex items-center gap-1.5 text-xs text-gray-500 mb-1">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Registrations</span>
+                  </div>
+                  <div className="text-xl font-bold text-gray-900">
+                    {stats?.totalRegistrations || 420}+
+                  </div>
+                  <p className="text-[11px] text-gray-500">Event participants</p>
+                </div>
+              </div>
+
+              <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl text-xs text-blue-900 flex items-center justify-between">
+                <span>📍 Ramanujan & Bhabha Block Labs</span>
+                <span className="font-semibold text-blue-700">Campus Events</span>
+              </div>
+
+            </div>
           </div>
 
         </div>

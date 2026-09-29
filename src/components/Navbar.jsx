@@ -2,128 +2,104 @@ import React, { useState } from 'react';
 import { 
   Code2, 
   Calendar, 
-  ShieldCheck, 
+  Users, 
+  Lock, 
   Menu, 
-  X, 
-  Search, 
-  CheckCircle, 
-  Sparkles,
-  Trophy,
-  ExternalLink
+  X,
+  MessageSquare,
+  HelpCircle
 } from 'lucide-react';
 
-export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCount, onSearchClick }) => {
+export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCount }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-40 w-full bg-white border-b border-gray-200 shadow-2xs">
       
-      {/* Top Notice Bar */}
-      <div className="bg-[#1C4980] text-white text-[11px] sm:text-xs py-1 px-4 text-center font-medium flex items-center justify-center gap-2">
-        <span className="inline-flex items-center gap-1 bg-blue-500/30 text-blue-100 px-2 py-0.2 rounded-full text-[10px]">
-          <CheckCircle className="w-3 h-3 text-cyan-300" />
-          Verified Chapter
-        </span>
-        <span>Official Student Chapter • ABES Engineering College, Ghaziabad</span>
+      {/* College Notice Bar */}
+      <div className="bg-slate-900 text-slate-200 text-xs py-1.5 px-4 text-center flex items-center justify-center gap-2">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>ABES Engineering College, Ghaziabad • CodeChef Student Chapter (2025-26)</span>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
+        <div className="flex items-center justify-between h-16">
           
-          {/* Unstop-style Brand Logo */}
+          {/* Logo & Brand */}
           <div 
             onClick={() => { setCurrentView('home'); setMobileMenuOpen(false); }}
-            className="flex items-center gap-3 cursor-pointer select-none"
+            className="flex items-center gap-2.5 cursor-pointer select-none"
           >
-            <div className="w-10 h-10 rounded-xl bg-[#1C4980] flex items-center justify-center text-white shadow-xs">
-              <Code2 className="w-6 h-6 text-white" />
+            <div className="w-9 h-9 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+              <Code2 className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg sm:text-xl tracking-tight text-[#1C4980]">
+                <span className="font-bold text-gray-900 text-base">
                   CodeChef
                 </span>
-                <span className="px-2 py-0.5 text-[11px] font-bold rounded-md bg-[#EBF3FC] text-[#0073E6] border border-[#BFDBFE]">
-                  ABESEC
+                <span className="px-1.5 py-0.5 text-[11px] font-semibold bg-blue-50 text-blue-700 border border-blue-200 rounded">
+                  ABESEC Chapter
                 </span>
               </div>
-              <p className="text-[11px] text-gray-500 font-medium">Opportunities & Events Portal</p>
+              <p className="text-[11px] text-gray-500">Department of Computer Science & Engineering</p>
             </div>
           </div>
 
-          {/* Quick Search Shortcut Bar (Unstop Search Experience) */}
-          <div className="hidden lg:flex items-center flex-1 max-w-md mx-8">
-            <button
-              onClick={() => {
-                setCurrentView('events');
-                if (onSearchClick) onSearchClick();
-              }}
-              className="w-full flex items-center justify-between px-3.5 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-full text-xs text-gray-500 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Search className="w-3.5 h-3.5 text-gray-400" />
-                <span>Search opportunities, hackathons, workshops...</span>
-              </div>
-              <span className="text-[10px] bg-white border border-gray-200 px-1.5 py-0.5 rounded text-gray-400 font-mono">
-                /
-              </span>
-            </button>
-          </div>
-
           {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-1 text-sm font-medium text-gray-700">
             <button
               onClick={() => setCurrentView('home')}
-              className={`px-3.5 py-2 rounded-full transition-colors ${
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
                 currentView === 'home'
-                  ? 'bg-[#EBF3FC] text-[#1C4980] font-bold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'bg-gray-100 text-gray-900 font-semibold'
+                  : 'hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
               Home
             </button>
             <button
               onClick={() => setCurrentView('events')}
-              className={`px-3.5 py-2 rounded-full transition-colors flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-lg transition-colors flex items-center gap-1.5 ${
                 currentView === 'events'
-                  ? 'bg-[#EBF3FC] text-[#1C4980] font-bold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'bg-gray-100 text-gray-900 font-semibold'
+                  : 'hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
-              <Trophy className="w-4 h-4 text-[#0073E6]" />
-              <span>Opportunities</span>
+              <Calendar className="w-4 h-4 text-blue-600" />
+              <span>Events</span>
               {eventCount > 0 && (
-                <span className="px-1.5 py-0.2 text-[10px] font-bold rounded-full bg-[#1C4980] text-white">
+                <span className="px-1.5 py-0.2 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
                   {eventCount}
                 </span>
               )}
             </button>
             <button
               onClick={() => setCurrentView('about')}
-              className={`px-3.5 py-2 rounded-full transition-colors ${
+              className={`px-3.5 py-2 rounded-lg transition-colors ${
                 currentView === 'about'
-                  ? 'bg-[#EBF3FC] text-[#1C4980] font-bold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  ? 'bg-gray-100 text-gray-900 font-semibold'
+                  : 'hover:text-gray-900 hover:bg-gray-50'
               }`}
             >
-              About Club
+              About & Team
             </button>
           </nav>
 
-          {/* Right Action / Host Button (Unstop style) */}
+          {/* Right Action Buttons */}
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={() => setCurrentView('admin')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-semibold border transition-all ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
                 currentView === 'admin'
-                  ? 'bg-[#1C4980] text-white border-[#1C4980] shadow-sm'
-                  : 'bg-white text-[#1C4980] border-[#1C4980]/30 hover:border-[#1C4980] hover:bg-blue-50/50'
+                  ? 'bg-gray-900 text-white border-gray-900'
+                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
               }`}
             >
-              <ShieldCheck className="w-4 h-4 text-[#0073E6]" />
-              <span>Host / Admin Portal</span>
+              <Lock className="w-3.5 h-3.5 text-gray-500" />
+              <span>Coordinator Login</span>
               {registrationCount > 0 && (
-                <span className="px-1.5 py-0.2 text-[10px] rounded-full bg-[#EBF3FC] text-[#1C4980] font-bold">
+                <span className="ml-1 px-1.5 py-0.2 text-[10px] rounded bg-gray-200 text-gray-800 font-mono">
                   {registrationCount}
                 </span>
               )}
@@ -132,9 +108,9 @@ export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCo
             {currentView !== 'events' && (
               <button
                 onClick={() => setCurrentView('events')}
-                className="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-[#0073E6] hover:bg-[#0060c0] text-white shadow-xs transition-colors"
+                className="px-4 py-2 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white transition-colors"
               >
-                Browse All
+                Register for Events
               </button>
             )}
           </div>
@@ -143,18 +119,18 @@ export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCo
           <div className="flex md:hidden items-center gap-2">
             <button
               onClick={() => setCurrentView('admin')}
-              className={`px-2.5 py-1.5 rounded-lg border text-xs font-semibold flex items-center gap-1 ${
+              className={`px-2.5 py-1.5 rounded-lg border text-xs font-medium flex items-center gap-1 ${
                 currentView === 'admin' 
-                  ? 'bg-[#1C4980] text-white border-[#1C4980]' 
-                  : 'bg-white text-[#1C4980] border-gray-300'
+                  ? 'bg-gray-900 text-white border-gray-900' 
+                  : 'bg-white text-gray-700 border-gray-300'
               }`}
             >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#0073E6]" />
+              <Lock className="w-3.5 h-3.5" />
               <span>Admin</span>
             </button>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200"
+              className="p-1.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -166,11 +142,11 @@ export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCo
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-gray-200 bg-white px-4 pt-3 pb-5 space-y-1">
+        <div className="md:hidden border-t border-gray-200 bg-white px-4 py-3 space-y-1">
           <button
             onClick={() => { setCurrentView('home'); setMobileMenuOpen(false); }}
             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium ${
-              currentView === 'home' ? 'bg-[#EBF3FC] text-[#1C4980] font-bold' : 'text-gray-700 hover:bg-gray-50'
+              currentView === 'home' ? 'bg-gray-100 text-gray-900 font-semibold' : 'text-gray-700 hover:bg-gray-50'
             }`}
           >
             Home
@@ -178,36 +154,33 @@ export const Navbar = ({ currentView, setCurrentView, eventCount, registrationCo
           <button
             onClick={() => { setCurrentView('events'); setMobileMenuOpen(false); }}
             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium flex items-center justify-between ${
-              currentView === 'events' ? 'bg-[#EBF3FC] text-[#1C4980] font-bold' : 'text-gray-700 hover:bg-gray-50'
+              currentView === 'events' ? 'bg-gray-100 text-gray-900 font-semibold' : 'text-gray-700 hover:bg-gray-50'
             }`}
           >
-            <span className="flex items-center gap-2">
-              <Trophy className="w-4 h-4 text-[#0073E6]" />
-              Opportunities
-            </span>
-            <span className="text-xs bg-[#EBF3FC] px-2 py-0.5 rounded-full text-[#1C4980] font-bold">
+            <span>Events & Contests</span>
+            <span className="text-xs bg-blue-100 px-2 py-0.5 rounded-full text-blue-800 font-semibold">
               {eventCount}
             </span>
           </button>
           <button
             onClick={() => { setCurrentView('about'); setMobileMenuOpen(false); }}
             className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium ${
-              currentView === 'about' ? 'bg-[#EBF3FC] text-[#1C4980] font-bold' : 'text-gray-700 hover:bg-gray-50'
+              currentView === 'about' ? 'bg-gray-100 text-gray-900 font-semibold' : 'text-gray-700 hover:bg-gray-50'
             }`}
           >
-            About Club
+            About & Core Team
           </button>
           <div className="pt-2 border-t border-gray-200">
             <button
               onClick={() => { setCurrentView('admin'); setMobileMenuOpen(false); }}
-              className={`w-full flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl text-sm font-semibold border ${
+              className={`w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold border ${
                 currentView === 'admin'
-                  ? 'bg-[#1C4980] text-white border-[#1C4980]'
-                  : 'bg-white text-[#1C4980] border-gray-300'
+                  ? 'bg-gray-900 text-white border-gray-900'
+                  : 'bg-white text-gray-700 border-gray-300'
               }`}
             >
-              <ShieldCheck className="w-4 h-4 text-[#0073E6]" />
-              <span>Host Dashboard ({registrationCount} Applications)</span>
+              <Lock className="w-3.5 h-3.5" />
+              <span>Event Coordinator Dashboard ({registrationCount} Registrations)</span>
             </button>
           </div>
         </div>

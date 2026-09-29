@@ -7,51 +7,51 @@ import {
   GraduationCap, 
   HelpCircle,
   ChevronRight,
-  ShieldCheck,
   CheckCircle2,
-  Award
+  Users
 } from 'lucide-react';
+import { TEAM_MEMBERS } from '../data/mockEvents';
 
 export const ClubIntroduction = ({ onExploreEvents }) => {
   const pillars = [
     {
-      icon: <Terminal className="w-5 h-5 text-[#0073E6]" />,
+      icon: <Terminal className="w-5 h-5 text-blue-600" />,
       title: "Competitive Programming",
-      desc: "Weekly contests, editorial breakdowns, and practice ladders for ICPC and CodeChef rated rounds."
+      desc: "Weekly practice rounds on CodeChef & LeetCode, contest problem editorials, and guidance for ICPC & campus rated contests."
     },
     {
       icon: <Trophy className="w-5 h-5 text-amber-500" />,
-      title: "Campus Hackathons",
-      desc: "Annual flagship hackathons with cash prize pools, mentorship sprints, and prototype demos."
+      title: "College Hackathons",
+      desc: "Annual 24-hour hackathons (HackABES), ideathons, and mentorship to help students build real-world project portfolios."
     },
     {
-      icon: <Cpu className="w-5 h-5 text-[#0073E6]" />,
-      title: "Hands-on Tech Bootcamps",
-      desc: "Masterclasses in Full Stack Development, AI engineering, Git workflows, and Web3."
+      icon: <Cpu className="w-5 h-5 text-blue-600" />,
+      title: "Hands-on Workshops",
+      desc: "Peer-led hands-on sessions in lab covering C++, Python, Git/GitHub, React, Node.js, and Full Stack Web Development."
     },
     {
       icon: <GraduationCap className="w-5 h-5 text-green-600" />,
       title: "Placement Mentorship",
-      desc: "Guidance from alumni working at top tech firms with resume reviews and mock rounds."
+      desc: "Guidance from 4th-year placed seniors with resume reviews, coding test patterns, and mock technical interviews."
     }
   ];
 
   const faqs = [
     {
-      q: "Who is eligible to apply for opportunities?",
-      a: "All students from ABESEC across all departments (CSE, IT, AIML, DS, ECE, MCA) and all years can apply. Beginners are encouraged to participate."
+      q: "Can freshers or 1st year students join events?",
+      a: "Yes! Most of our introductory workshops and contests are beginner-friendly and designed specifically for 1st and 2nd year students."
     },
     {
-      q: "Are the registrations and applications free?",
-      a: "Yes! All club contests, hackathons, and bootcamps are 100% free of charge for students."
+      q: "Are the registrations and events free?",
+      a: "Yes, all workshops, contests, and hackathons hosted by the CodeChef ABESEC Chapter are 100% free for ABESEC students."
     },
     {
-      q: "Do I get a participation certificate?",
-      a: "Yes, verified participants who attend events receive official digital certificates of participation signed by the faculty coordinator."
+      q: "Will I get attendance / duty leave for participating in hackathons?",
+      a: "For official college-level hackathons like HackABES, duty leave is officially requested through the CSE department faculty coordinator."
     },
     {
-      q: "How can I join the club core team?",
-      a: "Recruitments open at the start of each semester following the Chapter Orientation."
+      q: "How can I become a volunteer or join the core team?",
+      a: "Core team recruitment forms are circulated on WhatsApp and college notice boards at the beginning of each semester."
     }
   ];
 
@@ -60,73 +60,77 @@ export const ClubIntroduction = ({ onExploreEvents }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBF3FC] text-[#0073E6] text-xs font-semibold mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Verified Organizer Profile</span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-[#1C4980]">
-            About CodeChef ABESEC Chapter
+        <div className="max-w-3xl mb-10">
+          <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-1">
+            About The Chapter
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">
+            About CodeChef ABESEC Student Chapter
           </h2>
-          <p className="mt-2 text-sm text-gray-600 leading-relaxed">
-            The CodeChef ABESEC Student Chapter is an active technology and competitive programming community at <strong>ABES Engineering College, Ghaziabad</strong>, bridging academic curriculum and industry engineering practices.
+          <p className="mt-2 text-sm sm:text-base text-gray-600 leading-relaxed">
+            Founded by passionate students of ABES Engineering College, our chapter aims to cultivate a strong coding culture on campus. We bridge the gap between classroom theory and industry-ready software engineering skills through peer learning and contest culture.
           </p>
         </div>
 
         {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-14">
           {pillars.map((pillar, idx) => (
             <div 
               key={idx}
-              className="p-5 rounded-2xl bg-gray-50 border border-gray-200 hover:border-blue-200 hover:bg-blue-50/20 transition-all flex flex-col justify-between"
+              className="p-5 rounded-xl bg-gray-50 border border-gray-200 hover:border-gray-300 transition-colors flex flex-col justify-between"
             >
               <div>
-                <div className="w-10 h-10 rounded-xl bg-white border border-gray-200 flex items-center justify-center mb-3 shadow-2xs">
+                <div className="w-9 h-9 rounded-lg bg-white border border-gray-200 flex items-center justify-center mb-3 shadow-2xs">
                   {pillar.icon}
                 </div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">{pillar.title}</h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{pillar.desc}</p>
+                <h3 className="text-sm font-bold text-gray-900 mb-1">{pillar.title}</h3>
+                <p className="text-xs text-gray-600 leading-relaxed">{pillar.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Opportunity Banner (Unstop style CTA) */}
-        <div className="rounded-2xl bg-gradient-to-r from-[#1C4980] to-[#0073E6] text-white p-6 sm:p-8 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-          <div>
-            <span className="text-xs uppercase font-bold tracking-wider text-blue-200">
-              Student Opportunity Portal
+        {/* Core Team / Student Leads Section (Real College Club Feel!) */}
+        <div className="mb-14 pt-8 border-t border-gray-100">
+          <div className="mb-6">
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block mb-0.5">
+              People Behind The Club
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold mt-1">
-              Ready to compete and elevate your coding skills?
+            <h3 className="text-xl font-bold text-gray-900">
+              Meet the Student Core Team (2025-26)
             </h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-xl">
-              Register for upcoming campus hackathons and CP challenges. Compete for cash prizes, certificates, and recognition.
-            </p>
+            <p className="text-xs text-gray-500 mt-0.5">Students and faculty coordinating events, workshops, and contests</p>
           </div>
-          <button
-            onClick={onExploreEvents}
-            className="px-6 py-3 rounded-full font-bold text-xs sm:text-sm bg-white text-[#1C4980] hover:bg-gray-100 shrink-0 flex items-center gap-1.5 transition-colors shadow-xs"
-          >
-            <span>Explore Opportunities</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+            {TEAM_MEMBERS.map((member, idx) => (
+              <div key={idx} className="p-4 rounded-xl bg-white border border-gray-200 shadow-2xs text-left">
+                <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm mb-3">
+                  {member.name.split(' ').map(n => n[0]).join('')}
+                </div>
+                <h4 className="text-sm font-bold text-gray-900 leading-tight">{member.name}</h4>
+                <p className="text-xs font-semibold text-blue-600 mt-0.5">{member.role}</p>
+                <p className="text-[11px] text-gray-500 mt-1">{member.batch}</p>
+                <p className="text-[11px] text-gray-600 mt-1.5 leading-snug">{member.specialty}</p>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* FAQ Section */}
-        <div>
-          <div className="text-center max-w-xl mx-auto mb-6">
-            <h3 className="text-xl font-bold text-[#1C4980]">
+        {/* FAQs */}
+        <div className="pt-8 border-t border-gray-100">
+          <div className="mb-6">
+            <h3 className="text-xl font-bold text-gray-900">
               Frequently Asked Questions
             </h3>
-            <p className="text-xs text-gray-500 mt-1">Everything you need to know about participating</p>
+            <p className="text-xs text-gray-500 mt-0.5">Common questions from students across all branches</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 max-w-4xl">
             {faqs.map((faq, idx) => (
               <div key={idx} className="p-4 rounded-xl bg-gray-50 border border-gray-200">
-                <h4 className="text-xs sm:text-sm font-bold text-gray-900 mb-1 flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#0073E6] shrink-0" />
+                <h4 className="text-xs sm:text-sm font-bold text-gray-900 mb-1 flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                   <span>{faq.q}</span>
                 </h4>
                 <p className="text-xs text-gray-600 leading-relaxed pl-6">

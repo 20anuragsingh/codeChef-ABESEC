@@ -1,7 +1,7 @@
 import { INITIAL_EVENTS, INITIAL_REGISTRATIONS } from '../data/mockEvents';
 
-const EVENTS_KEY = 'codechef_abesec_events';
-const REGISTRATIONS_KEY = 'codechef_abesec_registrations';
+const EVENTS_KEY = 'codechef_abesec_events_v2';
+const REGISTRATIONS_KEY = 'codechef_abesec_registrations_v2';
 
 // Initialize storage if not already present
 export const initializeStorage = () => {
@@ -44,7 +44,6 @@ export const addEvent = (eventData) => {
     createdAt: new Date().toISOString()
   };
 
-  // If this new event is marked featured, unfeature others if desired or keep featured
   let updatedEvents = [...events];
   if (newEvent.featured) {
     updatedEvents = updatedEvents.map((e) => ({ ...e, featured: false }));
@@ -60,7 +59,6 @@ export const updateEvent = (id, updatedData) => {
     if (e.id === id) {
       return { ...e, ...updatedData };
     }
-    // If updating this event to be featured, unfeature others
     if (updatedData.featured && e.id !== id) {
       return { ...e, featured: false };
     }
@@ -75,7 +73,6 @@ export const deleteEvent = (id) => {
   const filteredEvents = events.filter((e) => e.id !== id);
   saveEvents(filteredEvents);
 
-  // Optionally clean up registrations for this event
   const registrations = getRegistrations();
   const filteredRegistrations = registrations.filter((r) => r.eventId !== id);
   saveRegistrations(filteredRegistrations);
@@ -102,20 +99,22 @@ export const saveRegistrations = (registrations) => {
 export const registerStudentForEvent = (registrationData) => {
   const registrations = getRegistrations();
   
-  // Check if student already registered for this event with same email
+  // Check if student already registered for this event with same email or roll number
   const existing = registrations.find(
-    (r) => r.eventId === registrationData.eventId && r.email.toLowerCase() === registrationData.email.toLowerCase()
+    (r) => r.eventId === registrationData.eventId && 
+    (r.email.toLowerCase() === registrationData.email.toLowerCase() || 
+     (registrationData.rollNumber && r.rollNumber === registrationData.rollNumber))
   );
 
   if (existing) {
-    throw new Error('You have already registered for this event with this email address.');
+    throw new Error('You have already registered for this event with this email or roll number.');
   }
 
   const randomTicketSuffix = Math.floor(1000 + Math.random() * 9000);
   const newRegistration = {
     ...registrationData,
-    id: `REG-${new Date().getFullYear()}-${randomTicketSuffix}`,
-    ticketCode: `CC-${randomTicketSuffix}-${registrationData.fullName.split(' ')[0].toUpperCase()}`,
+    id: `REG-2026-${randomTicketSuffix}`,
+    ticketCode: `ABES-${randomTicketSuffix}`,
     registeredAt: new Date().toISOString(),
     status: 'Confirmed',
     attended: false
@@ -153,22 +152,22 @@ export const resetToDemoData = () => {
 export const exportRegistrationsToCSV = (filteredRegistrations) => {
   const data = filteredRegistrations || getRegistrations();
   if (data.length === 0) {
-    alert('No registrations to export.');
+    alert('No student registrations found to export.');
     return;
   }
 
   const headers = [
     'Registration ID',
-    'Ticket Code',
-    'Event Title',
+    'Pass Code',
+    'Event Name',
     'Student Name',
-    'Email Address',
-    'College/Year',
+    'University Roll No',
+    'College Email',
+    'Year of Study',
     'Department',
-    'Phone Number',
+    'WhatsApp Number',
     'Registration Date',
-    'Status',
-    'Attended'
+    'Attendance'
   ];
 
   const rows = data.map((r) => [
@@ -176,20 +175,20 @@ export const exportRegistrationsToCSV = (filteredRegistrations) => {
     `"${r.ticketCode || ''}"`,
     `"${(r.eventTitle || '').replace(/"/g, '""')}"`,
     `"${(r.fullName || '').replace(/"/g, '""')}"`,
+    `"${r.rollNumber || ''}"`,
     `"${r.email || ''}"`,
     `"${r.collegeYear || ''}"`,
     `"${r.department || ''}"`,
     `"${r.phone || ''}"`,
     `"${new Date(r.registeredAt).toLocaleString()}"`,
-    `"${r.status || 'Confirmed'}"`,
-    `"${r.attended ? 'Yes' : 'No'}"`
+    `"${r.attended ? 'Present' : 'Absent'}"`
   ]);
 
   const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n');
   const encodedUri = encodeURI(csvContent);
   const link = document.createElement('a');
   link.setAttribute('href', encodedUri);
-  link.setAttribute('download', `CodeChef_ABESEC_Registrations_${new Date().toISOString().slice(0, 10)}.csv`);
+  link.setAttribute('download', `CodeChef_ABESEC_Student_Registrations_${new Date().toISOString().slice(0, 10)}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

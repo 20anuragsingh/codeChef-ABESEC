@@ -5,8 +5,7 @@ import {
   Trophy, 
   Users, 
   Clock, 
-  CheckCircle,
-  ExternalLink
+  ArrowRight
 } from 'lucide-react';
 
 export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDetails }) => {
@@ -25,102 +24,93 @@ export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDeta
   const daysLeft = calculateDaysLeft();
 
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-2xs hover:shadow-sm hover:border-gray-300 transition-all flex flex-col justify-between">
       
       <div>
-        {/* Card Thumbnail / Header Image */}
+        {/* Cover Image */}
         <div className="relative h-44 w-full bg-gray-100 overflow-hidden">
           <img 
             src={event.bannerImage || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80"} 
             alt={event.title}
-            className="w-full h-full object-cover group-hover:scale-102 transition-transform duration-300"
+            className="w-full h-full object-cover"
             loading="lazy"
           />
 
-          {/* Badges on Top */}
-          <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#DEF7EC] text-[#03543F] border border-green-200 shadow-xs">
-              {event.entryFee || 'Free'}
+          <div className="absolute top-3 left-3 flex items-center gap-1.5">
+            <span className="px-2.5 py-0.5 rounded text-xs font-semibold bg-white text-gray-800 border border-gray-200 shadow-2xs">
+              {event.category}
             </span>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-white/95 text-gray-800 shadow-xs border border-gray-200">
+            <span className="px-2 py-0.5 rounded text-xs font-medium bg-slate-900 text-white">
               {event.mode || 'In Campus'}
             </span>
           </div>
 
-          {/* Days Left badge at bottom */}
-          <div className="absolute bottom-2.5 left-3">
+          <div className="absolute bottom-2.5 right-3">
             {!isPast ? (
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-200 shadow-xs">
-                🔥 {daysLeft > 0 ? `${daysLeft} days left` : 'Happening today'}
+              <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-100 text-amber-900 border border-amber-200">
+                {daysLeft > 0 ? `${daysLeft} days to go` : 'Today'}
               </span>
             ) : (
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-gray-100 text-gray-600 border border-gray-200">
+              <span className="px-2 py-0.5 rounded text-[11px] font-medium bg-gray-100 text-gray-600 border border-gray-200">
                 Concluded
               </span>
             )}
           </div>
         </div>
 
-        {/* Card Body */}
-        <div className="p-4 sm:p-5">
+        {/* Card Content Body */}
+        <div className="p-5">
           
-          {/* Organization & Category Bar */}
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <div className="flex items-center gap-1.5 text-xs text-gray-500 truncate">
-              <span className="w-5 h-5 rounded-md bg-[#1C4980] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                CC
-              </span>
-              <span className="font-semibold text-gray-700 truncate">CodeChef ABESEC</span>
-            </div>
-            <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-[#EBF3FC] text-[#0073E6] shrink-0">
-              {event.category}
-            </span>
+          {/* Date & Time */}
+          <div className="flex items-center gap-1.5 text-xs text-blue-600 font-semibold mb-1.5">
+            <Calendar className="w-3.5 h-3.5" />
+            <span>{event.date} • {event.time}</span>
           </div>
 
-          {/* Opportunity Title */}
+          {/* Event Title */}
           <h3 
             onClick={() => onViewDetails(event)}
-            className="text-base font-bold text-[#1C4980] hover:text-[#0073E6] transition-colors cursor-pointer line-clamp-2 leading-snug"
+            className="text-base font-bold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer line-clamp-2 leading-snug"
           >
             {event.title}
           </h3>
 
-          {/* Unstop Metadata Chips */}
-          <div className="mt-3 space-y-1.5 text-xs text-gray-600">
-            <div className="flex items-center gap-1.5 truncate">
-              <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-              <span className="truncate">{event.venue}</span>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-gray-400 shrink-0" />
-              <span>{event.date} • {event.time}</span>
+          {/* Venue & Perks */}
+          <div className="mt-2.5 space-y-1.5 text-xs text-gray-600">
+            <div className="flex items-start gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5" />
+              <span className="line-clamp-1">{event.venue}</span>
             </div>
 
             {event.prizes && (
-              <div className="flex items-center gap-1.5 text-amber-700 font-medium truncate">
+              <div className="flex items-center gap-1.5 text-amber-800 font-medium">
                 <Trophy className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                <span className="truncate">{event.prizes}</span>
+                <span className="line-clamp-1">{event.prizes}</span>
               </div>
             )}
           </div>
+
+          {/* Short Description */}
+          <p className="mt-2.5 text-xs text-gray-500 line-clamp-2 leading-relaxed">
+            {event.shortDescription || event.description}
+          </p>
 
         </div>
       </div>
 
       {/* Card Action Footer */}
-      <div className="p-4 sm:p-5 pt-0">
+      <div className="p-5 pt-0">
         <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
           
-          <div className="flex items-center gap-1 text-xs text-gray-500 font-medium">
+          <div className="flex items-center gap-1 text-xs text-gray-500">
             <Users className="w-3.5 h-3.5 text-gray-400" />
-            <span><strong className="text-gray-900">{registrationCount}</strong> applied</span>
+            <span><strong className="text-gray-900">{registrationCount}</strong> / {capacity} seats</span>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={() => onViewDetails(event)}
-              className="px-3 py-1.5 rounded-full text-xs font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              className="px-3 py-1.5 rounded-lg text-xs font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
             >
               Details
             </button>
@@ -128,12 +118,12 @@ export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDeta
             <button
               onClick={() => onRegister(event)}
               disabled={isPast || isFull}
-              className={`px-4 py-1.5 rounded-full font-bold text-xs transition-all ${
+              className={`px-3.5 py-1.5 rounded-lg font-semibold text-xs transition-colors ${
                 isPast
                   ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
                   : isFull
                   ? 'bg-gray-100 text-gray-500 cursor-not-allowed border border-gray-200'
-                  : 'bg-[#0073E6] hover:bg-[#0060c0] text-white shadow-xs'
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}
             >
               {isPast ? 'Closed' : isFull ? 'Full' : 'Register'}

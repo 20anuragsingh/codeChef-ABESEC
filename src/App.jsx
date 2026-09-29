@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   getEvents, 
   getRegistrations, 
@@ -26,12 +26,10 @@ import { EventFormModal } from './components/EventFormModal';
 import { Footer } from './components/Footer';
 
 import { 
-  Trophy, 
+  Calendar, 
   ArrowRight, 
   CheckCircle2, 
-  Search, 
-  Flame, 
-  SlidersHorizontal 
+  Search 
 } from 'lucide-react';
 
 export default function App() {
@@ -49,9 +47,9 @@ export default function App() {
   // Toast feedback state
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Search & Filter state for Opportunities Page
+  // Search & Filter state for Events Page
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All Opportunities');
+  const [selectedCategory, setSelectedCategory] = useState('All Events');
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [selectedMode, setSelectedMode] = useState('All');
 
@@ -97,17 +95,16 @@ export default function App() {
       .slice(0, 3);
   }, [events]);
 
-  // Filtered events for Opportunities Page
+  // Filtered events for Events Page
   const filteredEvents = useMemo(() => {
     return events.filter((e) => {
       const matchesSearch = 
         e.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (e.description && e.description.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (e.venue && e.venue.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (e.eligibility && e.eligibility.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (e.tags && e.tags.some((t) => t.toLowerCase().includes(searchTerm.toLowerCase())));
 
-      const matchesCategory = selectedCategory === 'All Opportunities' || e.category === selectedCategory;
+      const matchesCategory = selectedCategory === 'All Events' || e.category === selectedCategory;
       
       const isPast = e.status === 'Completed' || new Date(e.dateTimeIso || e.date) < new Date();
       const matchesStatus = 
@@ -124,7 +121,7 @@ export default function App() {
   // Handlers for Registration
   const handleRegisterSubmit = (payload) => {
     const newReg = registerStudentForEvent(payload);
-    showToast(`Application submitted for ${payload.eventTitle}!`);
+    showToast(`Registered for ${payload.eventTitle}!`);
     return newReg;
   };
 
@@ -142,43 +139,43 @@ export default function App() {
   const handleSaveEvent = (payload) => {
     if (editingEvent && editingEvent.id) {
       updateEvent(editingEvent.id, payload);
-      showToast('Opportunity updated successfully.');
+      showToast('Event updated successfully.');
     } else {
       addEvent(payload);
-      showToast('New opportunity published on Unstop!');
+      showToast('New event created.');
     }
   };
 
   const handleDeleteEvent = (id) => {
     deleteEvent(id);
-    showToast('Opportunity removed.');
+    showToast('Event deleted.');
   };
 
   const handleDeleteRegistration = (id) => {
     deleteRegistration(id);
-    showToast('Application cancelled.');
+    showToast('Registration cancelled.');
   };
 
   const handleToggleAttendance = (id) => {
     const updated = toggleRegistrationAttendance(id);
-    showToast(updated.attended ? 'Candidate marked present.' : 'Attendance removed.');
+    showToast(updated.attended ? 'Student marked present.' : 'Attendance removed.');
   };
 
   const handleResetData = () => {
-    if (window.confirm('Reset all opportunities and applications to default demo data?')) {
+    if (window.confirm('Reset all events and registrations to default demo data?')) {
       resetToDemoData();
-      showToast('Reset to demo data.');
+      showToast('Reset to default sample data.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F9FB] text-gray-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col font-sans">
       
       {/* Toast Notification */}
       {toastMessage && (
         <div className="fixed bottom-5 right-5 z-50 animate-in slide-in-from-bottom-5 duration-200">
-          <div className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-[#1C4980] text-white shadow-lg text-xs sm:text-sm font-semibold">
-            <CheckCircle2 className="w-4 h-4 text-cyan-300 shrink-0" />
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 text-white shadow-md text-xs sm:text-sm font-medium">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
             <span>{toastMessage.message}</span>
           </div>
         </div>
@@ -190,10 +187,6 @@ export default function App() {
         setCurrentView={setCurrentView}
         eventCount={events.length}
         registrationCount={registrations.length}
-        onSearchClick={() => {
-          const el = document.getElementById('search-input');
-          if (el) el.focus();
-        }}
       />
 
       {/* Main Content */}
@@ -203,7 +196,7 @@ export default function App() {
         {currentView === 'home' && (
           <div>
             
-            {/* Unstop Organizer Profile Header */}
+            {/* Hero Section */}
             <Hero 
               onExploreEvents={() => setCurrentView('events')}
               onScrollToFeatured={() => {
@@ -212,11 +205,11 @@ export default function App() {
               }}
               stats={{
                 totalEvents: events.length,
-                totalRegistrations: registrations.length + 840
+                totalRegistrations: registrations.length + 420
               }}
             />
 
-            {/* Featured Opportunity Spotlight */}
+            {/* Featured Event Spotlight */}
             {featuredEvent && (
               <FeaturedEvent 
                 event={featuredEvent}
@@ -226,23 +219,23 @@ export default function App() {
               />
             )}
 
-            {/* Live & Upcoming Opportunities Grid Preview */}
-            <section className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Upcoming Events Preview */}
+            <section className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <div>
-                  <div className="flex items-center gap-1.5 text-[#0073E6] text-xs font-bold uppercase tracking-wider mb-0.5">
-                    <Trophy className="w-3.5 h-3.5" />
-                    <span>Live & Upcoming</span>
+                  <div className="flex items-center gap-1.5 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-0.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Campus Calendar</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold text-[#1C4980]">
-                    Campus Opportunities
+                  <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+                    Upcoming Events & Contests
                   </h2>
                 </div>
                 <button
                   onClick={() => setCurrentView('events')}
-                  className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0073E6] hover:text-[#005bb5] transition-colors"
+                  className="inline-flex items-center gap-1 text-xs sm:text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
                 >
-                  <span>Explore All {events.length} Opportunities</span>
+                  <span>View All {events.length} Events</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -260,7 +253,7 @@ export default function App() {
               </div>
             </section>
 
-            {/* Club Introduction & FAQs */}
+            {/* Club Introduction & Core Team */}
             <ClubIntroduction 
               onExploreEvents={() => setCurrentView('events')}
             />
@@ -268,19 +261,19 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 2: ALL OPPORTUNITIES PAGE */}
+        {/* VIEW 2: EVENTS PAGE */}
         {currentView === 'events' && (
           <div className="py-8 sm:py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
             <div className="mb-6">
-              <div className="flex items-center gap-1.5 text-[#0073E6] text-xs font-bold uppercase tracking-wider mb-1">
-                <span>CodeChef ABESEC Opportunity Hub</span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-[#1C4980]">
-                All Opportunities & Contests
+              <span className="text-xs font-semibold text-blue-600 uppercase tracking-wide block mb-1">
+                ABESEC Campus Schedule
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                All Campus Events & Workshops
               </h1>
               <p className="text-xs sm:text-sm text-gray-600 mt-1 max-w-xl">
-                Browse hackathons, coding challenges, workshops, and speaker sessions. Apply online, compete, and receive verified certificates.
+                Browse hackathons, competitive programming contests, and development bootcamps. Free registration for all ABESEC students.
               </p>
             </div>
 
@@ -297,24 +290,24 @@ export default function App() {
               totalResults={filteredEvents.length}
             />
 
-            {/* Opportunity Cards Grid */}
+            {/* Event Cards Grid */}
             {filteredEvents.length === 0 ? (
-              <div className="py-16 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
+              <div className="py-14 text-center bg-white border border-gray-200 rounded-xl p-6 shadow-2xs">
                 <Search className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <h3 className="text-base font-bold text-[#1C4980]">No opportunities found</h3>
+                <h3 className="text-base font-bold text-gray-900">No events found</h3>
                 <p className="text-xs text-gray-500 mt-1">
-                  Try adjusting your search query, mode, or category filters.
+                  Try adjusting your search query or selected category filter.
                 </p>
                 <button
                   onClick={() => {
                     setSearchTerm('');
-                    setSelectedCategory('All Opportunities');
+                    setSelectedCategory('All Events');
                     setSelectedStatus('All');
                     setSelectedMode('All');
                   }}
-                  className="mt-4 px-4 py-2 rounded-full text-xs font-bold bg-[#0073E6] text-white hover:bg-[#0060c0] transition-colors"
+                  className="mt-4 px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                 >
-                  Clear All Filters
+                  Clear Filters
                 </button>
               </div>
             ) : (
@@ -343,7 +336,7 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 4: ADMIN / HOST DASHBOARD */}
+        {/* VIEW 4: ADMIN / COORDINATOR DASHBOARD */}
         {currentView === 'admin' && (
           <AdminDashboard 
             events={events}
@@ -385,7 +378,7 @@ export default function App() {
         onRegister={(evt) => setRegisterEvent(evt)}
       />
 
-      {/* DIGITAL TICKET / E-PASS MODAL */}
+      {/* DIGITAL TICKET / ENTRY SLIP MODAL */}
       {ticketModalState && (
         <TicketModal 
           isOpen={Boolean(ticketModalState)}
