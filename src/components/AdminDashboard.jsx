@@ -8,19 +8,13 @@ import {
   Download, 
   Calendar, 
   Users, 
-  Sparkles, 
   CheckCircle2, 
-  XCircle, 
-  AlertTriangle,
   RotateCcw,
   ArrowLeft,
   Ticket,
   Mail,
   Phone,
-  GraduationCap,
-  ExternalLink,
   ShieldCheck,
-  Building2,
   Check
 } from 'lucide-react';
 import { exportRegistrationsToCSV } from '../services/storageService';
@@ -92,29 +86,29 @@ export const AdminDashboard = ({
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="min-h-screen bg-gray-50 text-gray-900 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-6">
         
-        {/* Top Control Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+        {/* Top Header */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-gray-200">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30">
+              <span className="p-1 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
                 <ShieldCheck className="w-5 h-5" />
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Admin Operations Portal
+              <h1 className="text-2xl font-bold text-gray-900">
+                Admin Dashboard
               </h1>
             </div>
-            <p className="text-xs sm:text-sm text-slate-400 mt-1">
-              Manage CodeChef ABESEC club events, track registrations, and verify campus attendees.
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              Manage club events and monitor registered student attendees.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={onBackToStudentView}
-              className="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-200 flex items-center gap-1.5 transition-colors"
+              className="px-3 py-2 rounded-lg text-xs sm:text-sm font-medium bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 flex items-center gap-1.5 transition-colors"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Student View</span>
@@ -122,7 +116,7 @@ export const AdminDashboard = ({
 
             <button
               onClick={() => onResetDemoData()}
-              className="px-3 py-2 rounded-xl text-xs font-medium bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white flex items-center gap-1.5 transition-colors"
+              className="px-3 py-2 rounded-lg text-xs font-medium bg-white border border-gray-300 hover:bg-gray-50 text-gray-600 flex items-center gap-1.5 transition-colors"
               title="Reset all events and registrations back to clean default demo data"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -131,7 +125,7 @@ export const AdminDashboard = ({
 
             <button
               onClick={() => onAddEvent()}
-              className="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 shadow-md shadow-amber-500/20 flex items-center gap-1.5 transition-all"
+              className="px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1.5 transition-colors"
             >
               <Plus className="w-4 h-4" />
               <span>Add Event</span>
@@ -139,43 +133,43 @@ export const AdminDashboard = ({
           </div>
         </div>
 
-        {/* Metric Summary Cards */}
+        {/* Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-xs">
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
               <span>Total Events</span>
-              <Calendar className="w-4 h-4 text-indigo-400" />
+              <Calendar className="w-4 h-4 text-blue-600" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white">{events.length}</div>
-            <p className="text-[11px] text-slate-400 mt-1">{upcomingEventsCount} upcoming</p>
+            <div className="text-2xl font-bold text-gray-900">{events.length}</div>
+            <p className="text-xs text-gray-500 mt-1">{upcomingEventsCount} upcoming</p>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-              <span>Student Registrations</span>
-              <Users className="w-4 h-4 text-amber-400" />
+          <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-xs">
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+              <span>Registrations</span>
+              <Users className="w-4 h-4 text-blue-600" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-amber-400">{registrations.length}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Confirmed student passes</p>
+            <div className="text-2xl font-bold text-blue-600">{registrations.length}</div>
+            <p className="text-xs text-gray-500 mt-1">Total student signups</p>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+          <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-xs">
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
               <span>Attendance Verified</span>
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+              <CheckCircle2 className="w-4 h-4 text-green-600" />
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-emerald-400">{attendedCount}</div>
-            <p className="text-[11px] text-slate-400 mt-1">Checked in at campus</p>
+            <div className="text-2xl font-bold text-green-600">{attendedCount}</div>
+            <p className="text-xs text-gray-500 mt-1">Checked in at venue</p>
           </div>
 
-          <div className="p-4 sm:p-5 rounded-2xl bg-slate-900/80 border border-slate-800">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-              <span>CSV Quick Export</span>
-              <Download className="w-4 h-4 text-cyan-400" />
+          <div className="p-4 bg-white border border-gray-200 rounded-xl shadow-xs">
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+              <span>Export CSV</span>
+              <Download className="w-4 h-4 text-gray-600" />
             </div>
             <button
               onClick={() => exportRegistrationsToCSV(filteredRegistrations)}
-              className="mt-2 w-full py-1.5 px-3 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 flex items-center justify-center gap-1.5 transition-colors"
+              className="mt-2 w-full py-1.5 px-3 rounded-lg text-xs font-semibold bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-200 flex items-center justify-center gap-1.5 transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Download CSV</span>
@@ -184,33 +178,33 @@ export const AdminDashboard = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-slate-800">
+        <div className="flex items-center gap-2 border-b border-gray-200">
           <button
             onClick={() => setActiveTab('events')}
-            className={`pb-3 px-4 font-bold text-sm sm:text-base border-b-2 flex items-center gap-2 transition-colors ${
+            className={`pb-3 px-4 font-semibold text-sm border-b-2 flex items-center gap-2 transition-colors ${
               activeTab === 'events'
-                ? 'border-indigo-500 text-white'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-900'
             }`}
           >
             <Calendar className="w-4 h-4" />
             <span>Manage Events</span>
-            <span className="px-2 py-0.2 rounded-full text-xs bg-slate-800 text-slate-300">
+            <span className="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-700">
               {events.length}
             </span>
           </button>
 
           <button
             onClick={() => setActiveTab('registrations')}
-            className={`pb-3 px-4 font-bold text-sm sm:text-base border-b-2 flex items-center gap-2 transition-colors ${
+            className={`pb-3 px-4 font-semibold text-sm border-b-2 flex items-center gap-2 transition-colors ${
               activeTab === 'registrations'
-                ? 'border-indigo-500 text-white'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-900'
             }`}
           >
             <Users className="w-4 h-4" />
             <span>Registered Students</span>
-            <span className="px-2 py-0.2 rounded-full text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <span className="px-2 py-0.5 rounded-full text-xs bg-blue-50 text-blue-700 border border-blue-200">
               {registrations.length}
             </span>
           </button>
@@ -218,49 +212,46 @@ export const AdminDashboard = ({
 
         {/* TAB 1: MANAGE EVENTS */}
         {activeTab === 'events' && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             
-            {/* Search & Actions Bar */}
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="relative w-full sm:w-96">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="relative w-full sm:w-80">
+                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={eventSearch}
                   onChange={(e) => setEventSearch(e.target.value)}
-                  placeholder="Search events by title or venue..."
-                  className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-800 rounded-xl text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Search events by title..."
+                  className="w-full pl-9 pr-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
-              <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
-                <button
-                  onClick={() => onAddEvent()}
-                  className="w-full sm:w-auto px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shadow-md flex items-center justify-center gap-2"
-                >
-                  <Plus className="w-4 h-4" />
-                  <span>Create Event</span>
-                </button>
-              </div>
+              <button
+                onClick={() => onAddEvent()}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center gap-1.5 transition-colors"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Create Event</span>
+              </button>
             </div>
 
-            {/* Events Table / List */}
-            <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
+            {/* Events Table */}
+            <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-xs">
               <table className="w-full text-left text-xs sm:text-sm">
-                <thead className="bg-slate-950/80 text-slate-400 uppercase text-[11px] font-mono border-b border-slate-800">
+                <thead className="bg-gray-50 text-gray-700 border-b border-gray-200 font-semibold text-xs">
                   <tr>
-                    <th className="py-3.5 px-4">Event Details</th>
-                    <th className="py-3.5 px-4">Category & Mode</th>
-                    <th className="py-3.5 px-4">Schedule</th>
-                    <th className="py-3.5 px-4">Capacity</th>
-                    <th className="py-3.5 px-4">Status</th>
-                    <th className="py-3.5 px-4 text-right">Actions</th>
+                    <th className="py-3 px-4">Event Title</th>
+                    <th className="py-3 px-4">Category</th>
+                    <th className="py-3 px-4">Date & Time</th>
+                    <th className="py-3 px-4">Capacity</th>
+                    <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-850">
+                <tbody className="divide-y divide-gray-100 text-gray-800">
                   {filteredEvents.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-500">
+                      <td colSpan={6} className="py-10 text-center text-gray-500">
                         No events found matching your search.
                       </td>
                     </tr>
@@ -268,75 +259,54 @@ export const AdminDashboard = ({
                     filteredEvents.map((evt) => {
                       const eventRegs = registrations.filter((r) => r.eventId === evt.id);
                       return (
-                        <tr key={evt.id} className="hover:bg-slate-850/50 transition-colors">
+                        <tr key={evt.id} className="hover:bg-gray-50 transition-colors">
                           
-                          {/* Title & Featured */}
-                          <td className="py-4 px-4 max-w-xs">
-                            <div className="flex items-start gap-2.5">
-                              {evt.featured && (
-                                <span className="text-amber-400 shrink-0 mt-0.5" title="Featured Spotlight">
-                                  ★
-                                </span>
-                              )}
-                              <div>
-                                <span className="font-bold text-white block leading-snug">{evt.title}</span>
-                                <span className="text-[11px] text-slate-400 truncate block mt-0.5">{evt.venue}</span>
-                              </div>
-                            </div>
+                          <td className="py-3.5 px-4 max-w-xs">
+                            <span className="font-semibold text-gray-900 block leading-snug">{evt.title}</span>
+                            <span className="text-xs text-gray-500 truncate block mt-0.5">{evt.venue}</span>
                           </td>
 
-                          {/* Category & Mode */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span className="px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-700">
                               {evt.category}
                             </span>
-                            <span className="block text-[11px] text-slate-400 mt-1 font-mono">
+                            <span className="block text-xs text-gray-500 mt-0.5">
                               {evt.mode || 'Offline'}
                             </span>
                           </td>
 
-                          {/* Date & Time */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <span className="font-medium text-white">{evt.date}</span>
-                            <span className="block text-[11px] text-slate-400 font-mono">{evt.time}</span>
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span className="text-gray-900 block">{evt.date}</span>
+                            <span className="text-xs text-gray-500">{evt.time}</span>
                           </td>
 
-                          {/* Capacity / Regs */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <span className="font-bold text-amber-300">{eventRegs.length}</span>
-                            <span className="text-slate-400"> / {evt.capacity || 100}</span>
-                            <div className="w-16 h-1 rounded-full bg-slate-800 mt-1.5 overflow-hidden">
-                              <div 
-                                className="h-full bg-indigo-500 rounded-full"
-                                style={{ width: `${Math.min(100, ((eventRegs.length) / (evt.capacity || 100)) * 100)}%` }}
-                              />
-                            </div>
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span className="font-semibold text-blue-600">{eventRegs.length}</span>
+                            <span className="text-gray-500"> / {evt.capacity || 100}</span>
                           </td>
 
-                          {/* Status */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <span className={`px-2 py-0.5 rounded text-[11px] font-semibold ${
+                          <td className="py-3.5 px-4 whitespace-nowrap">
+                            <span className={`px-2 py-0.5 rounded text-xs font-medium ${
                               evt.status === 'Completed'
-                                ? 'bg-slate-800 text-slate-400'
-                                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                                ? 'bg-gray-100 text-gray-600'
+                                : 'bg-green-50 text-green-700 border border-green-200'
                             }`}>
                               {evt.status || 'Upcoming'}
                             </span>
                           </td>
 
-                          {/* Actions */}
-                          <td className="py-4 px-4 whitespace-nowrap text-right">
+                          <td className="py-3.5 px-4 whitespace-nowrap text-right">
                             <div className="inline-flex items-center gap-1.5">
                               <button
                                 onClick={() => onEditEvent(evt)}
-                                className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-750 transition-colors"
+                                className="p-1.5 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                                 title="Edit this event"
                               >
                                 <Edit3 className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => setDeleteConfirmation({ type: 'event', id: evt.id, name: evt.title })}
-                                className="p-2 rounded-lg bg-slate-800 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
+                                className="p-1.5 rounded-lg bg-gray-100 text-red-600 hover:bg-red-50 transition-colors"
                                 title="Delete this event"
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -357,33 +327,30 @@ export const AdminDashboard = ({
 
         {/* TAB 2: REGISTERED STUDENTS */}
         {activeTab === 'registrations' && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             
-            {/* Search & Filter Registrations */}
-            <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
+            <div className="p-3.5 bg-white border border-gray-200 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3 shadow-xs">
               
-              {/* Search text input */}
               <div className="relative flex-1">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                <Search className="w-4 h-4 text-gray-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
                   value={regSearch}
                   onChange={(e) => setRegSearch(e.target.value)}
-                  placeholder="Search students by name, email, phone, or ticket pass code..."
-                  className="w-full pl-9 pr-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Search students by name, email, phone, or ticket code..."
+                  className="w-full pl-9 pr-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
               </div>
 
-              {/* Filter by Event */}
               <div className="flex flex-wrap items-center gap-2">
-                <div className="flex items-center gap-1.5 text-xs text-slate-400">
-                  <Filter className="w-3.5 h-3.5 text-indigo-400" />
+                <div className="flex items-center gap-1.5 text-xs text-gray-600">
+                  <Filter className="w-3.5 h-3.5 text-blue-600" />
                   <span>Event:</span>
                 </div>
                 <select
                   value={regEventFilter}
                   onChange={(e) => setRegEventFilter(e.target.value)}
-                  className="py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 max-w-[200px] truncate"
+                  className="py-1.5 px-3 bg-white border border-gray-300 rounded-lg text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500 max-w-[200px] truncate"
                 >
                   <option value="All">All Events ({registrations.length})</option>
                   {events.map((e) => (
@@ -393,22 +360,20 @@ export const AdminDashboard = ({
                   ))}
                 </select>
 
-                {/* Filter by Attendance */}
                 <select
                   value={regStatusFilter}
                   onChange={(e) => setRegStatusFilter(e.target.value)}
-                  className="py-2 px-3 bg-slate-950 border border-slate-800 rounded-xl text-white text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="py-1.5 px-3 bg-white border border-gray-300 rounded-lg text-gray-900 text-xs focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
                   <option value="All">All Status</option>
                   <option value="Attended">Attended</option>
-                  <option value="Pending">Pending Check-in</option>
+                  <option value="Pending">Pending</option>
                 </select>
 
-                {/* CSV Download */}
                 <button
                   onClick={() => exportRegistrationsToCSV(filteredRegistrations)}
-                  className="py-2 px-3.5 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center gap-1.5 transition-colors shadow-sm"
-                  title="Export filtered registrations to CSV spreadsheet"
+                  className="py-1.5 px-3 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1.5 transition-colors"
+                  title="Export filtered registrations to CSV"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Export CSV</span>
@@ -417,30 +382,27 @@ export const AdminDashboard = ({
 
             </div>
 
-            {/* Results count banner */}
-            <div className="text-xs text-slate-400 flex items-center justify-between px-1">
-              <span>
-                Found <strong className="text-amber-400">{filteredRegistrations.length}</strong> student registrations
-              </span>
+            <div className="text-xs text-gray-500 px-1">
+              Found <strong>{filteredRegistrations.length}</strong> student registrations
             </div>
 
             {/* Registrations Table */}
-            <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60">
+            <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-xs">
               <table className="w-full text-left text-xs sm:text-sm">
-                <thead className="bg-slate-950/80 text-slate-400 uppercase text-[11px] font-mono border-b border-slate-800">
+                <thead className="bg-gray-50 text-gray-700 border-b border-gray-200 font-semibold text-xs">
                   <tr>
-                    <th className="py-3.5 px-4">Pass & Attendee</th>
-                    <th className="py-3.5 px-4">College / Year & Branch</th>
-                    <th className="py-3.5 px-4">Contact Info</th>
-                    <th className="py-3.5 px-4">Registered Event</th>
-                    <th className="py-3.5 px-4">Attendance</th>
-                    <th className="py-3.5 px-4 text-right">Actions</th>
+                    <th className="py-3 px-4">Ticket & Attendee</th>
+                    <th className="py-3 px-4">College / Year & Department</th>
+                    <th className="py-3 px-4">Contact</th>
+                    <th className="py-3 px-4">Event</th>
+                    <th className="py-3 px-4">Attendance</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-850">
+                <tbody className="divide-y divide-gray-100 text-gray-800">
                   {filteredRegistrations.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="py-12 text-center text-slate-500">
+                      <td colSpan={6} className="py-10 text-center text-gray-500">
                         No registrations found matching the specified filters.
                       </td>
                     </tr>
@@ -454,62 +416,52 @@ export const AdminDashboard = ({
                       };
 
                       return (
-                        <tr key={reg.id} className="hover:bg-slate-850/50 transition-colors">
+                        <tr key={reg.id} className="hover:bg-gray-50 transition-colors">
                           
-                          {/* Pass Code & Name */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <div className="flex items-center gap-2">
-                              <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                                {reg.ticketCode}
-                              </span>
-                            </div>
-                            <span className="font-bold text-white block mt-1">{reg.fullName}</span>
-                            <span className="text-[10px] text-slate-500 font-mono">
-                              Reg: {new Date(reg.registeredAt).toLocaleDateString()}
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <span className="font-mono text-xs font-bold px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">
+                              {reg.ticketCode}
                             </span>
+                            <span className="font-semibold text-gray-900 block mt-1">{reg.fullName}</span>
                           </td>
 
-                          {/* College/Year & Dept */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <span className="text-white block font-medium">{reg.collegeYear}</span>
-                            <span className="text-xs text-slate-400 block truncate max-w-[200px]">
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <span className="text-gray-900 block font-medium">{reg.collegeYear}</span>
+                            <span className="text-xs text-gray-500 block truncate max-w-[190px]">
                               {reg.department || 'Computer Science'}
                             </span>
                           </td>
 
-                          {/* Contact Info */}
-                          <td className="py-4 px-4 whitespace-nowrap">
-                            <div className="flex items-center gap-1.5 text-slate-300">
-                              <Mail className="w-3.5 h-3.5 text-indigo-400" />
+                          <td className="py-3 px-4 whitespace-nowrap">
+                            <div className="flex items-center gap-1.5 text-gray-700">
+                              <Mail className="w-3.5 h-3.5 text-gray-400" />
                               <span>{reg.email}</span>
                             </div>
-                            <div className="flex items-center gap-1.5 text-slate-400 mt-1">
-                              <Phone className="w-3.5 h-3.5 text-amber-400" />
-                              <span className="font-mono text-xs">{reg.phone}</span>
+                            <div className="flex items-center gap-1.5 text-gray-500 mt-0.5">
+                              <Phone className="w-3.5 h-3.5 text-gray-400" />
+                              <span>{reg.phone}</span>
                             </div>
                           </td>
 
-                          {/* Event Title */}
-                          <td className="py-4 px-4 max-w-xs">
-                            <span className="font-semibold text-slate-200 block truncate">
+                          <td className="py-3 px-4 max-w-xs">
+                            <span className="text-gray-900 block truncate font-medium">
                               {reg.eventTitle || matchedEvent.title}
                             </span>
                           </td>
 
-                          {/* Attendance Status Toggle */}
-                          <td className="py-4 px-4 whitespace-nowrap">
+                          <td className="py-3 px-4 whitespace-nowrap">
                             <button
                               onClick={() => onToggleAttendance(reg.id)}
-                              className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all ${
+                              className={`px-2.5 py-1 rounded text-xs font-medium flex items-center gap-1 transition-colors ${
                                 reg.attended
-                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                                  : 'bg-slate-800 text-slate-400 border border-slate-700 hover:text-white'
+                                  ? 'bg-green-100 text-green-800'
+                                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                               }`}
-                              title="Click to toggle attendance check-in"
+                              title="Toggle attendance"
                             >
                               {reg.attended ? (
                                 <>
-                                  <Check className="w-3 h-3 text-emerald-400" />
+                                  <Check className="w-3 h-3 text-green-700" />
                                   <span>Present</span>
                                 </>
                               ) : (
@@ -518,20 +470,19 @@ export const AdminDashboard = ({
                             </button>
                           </td>
 
-                          {/* Actions: View Pass & Delete */}
-                          <td className="py-4 px-4 whitespace-nowrap text-right">
+                          <td className="py-3 px-4 whitespace-nowrap text-right">
                             <div className="inline-flex items-center gap-1.5">
                               <button
                                 onClick={() => onViewTicket(reg, matchedEvent)}
-                                className="p-2 rounded-lg bg-slate-800 text-indigo-400 hover:text-indigo-300 hover:bg-slate-750 transition-colors"
-                                title="View digital attendee ticket"
+                                className="p-1.5 rounded-lg bg-gray-100 text-blue-600 hover:bg-gray-200 transition-colors"
+                                title="View pass"
                               >
                                 <Ticket className="w-4 h-4" />
                               </button>
                               <button
                                 onClick={() => setDeleteConfirmation({ type: 'registration', id: reg.id, name: `${reg.fullName} (${reg.ticketCode})` })}
-                                className="p-2 rounded-lg bg-slate-800 text-red-400 hover:text-red-300 hover:bg-red-500/20 transition-colors"
-                                title="Cancel registration"
+                                className="p-1.5 rounded-lg bg-gray-100 text-red-600 hover:bg-red-50 transition-colors"
+                                title="Delete registration"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -551,30 +502,24 @@ export const AdminDashboard = ({
 
         {/* DELETE CONFIRMATION MODAL */}
         {deleteConfirmation && (
-          <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-4">
-              <div className="w-12 h-12 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center mx-auto border border-red-500/30">
-                <AlertTriangle className="w-6 h-6" />
-              </div>
-              <div className="text-center">
-                <h3 className="text-lg font-bold text-white">
-                  Confirm Deletion
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-300 mt-2">
-                  Are you sure you want to delete <strong className="text-white">"{deleteConfirmation.name}"</strong>? 
-                  {deleteConfirmation.type === 'event' && ' This will also remove any associated registrations.'}
-                </p>
-              </div>
-              <div className="flex items-center justify-end gap-3 pt-2">
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-xs flex items-center justify-center p-4">
+            <div className="w-full max-w-md bg-white border border-gray-200 rounded-xl p-6 shadow-xl space-y-4">
+              <h3 className="text-lg font-bold text-gray-900">
+                Confirm Deletion
+              </h3>
+              <p className="text-sm text-gray-600">
+                Are you sure you want to delete <strong>"{deleteConfirmation.name}"</strong>?
+              </p>
+              <div className="flex items-center justify-end gap-2.5 pt-2">
                 <button
                   onClick={() => setDeleteConfirmation(null)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-800 text-slate-300 hover:bg-slate-750"
+                  className="px-3.5 py-2 rounded-lg text-xs font-medium bg-gray-100 text-gray-700 hover:bg-gray-200"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleDeleteConfirmed}
-                  className="px-4 py-2 rounded-xl text-xs font-bold bg-red-600 hover:bg-red-500 text-white shadow-md shadow-red-600/30"
+                  className="px-3.5 py-2 rounded-lg text-xs font-semibold bg-red-600 hover:bg-red-700 text-white"
                 >
                   Yes, Delete
                 </button>

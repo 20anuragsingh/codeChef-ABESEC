@@ -27,12 +27,8 @@ import { Footer } from './components/Footer';
 
 import { 
   Calendar, 
-  Sparkles, 
   ArrowRight, 
   CheckCircle2, 
-  AlertCircle,
-  HelpCircle,
-  Flame,
   Search
 } from 'lucide-react';
 
@@ -122,7 +118,7 @@ export default function App() {
   // Handlers for Registration
   const handleRegisterSubmit = (payload) => {
     const newReg = registerStudentForEvent(payload);
-    showToast(`Successfully registered for ${payload.eventTitle}!`);
+    showToast(`Registered for ${payload.eventTitle}!`);
     return newReg;
   };
 
@@ -140,43 +136,43 @@ export default function App() {
   const handleSaveEvent = (payload) => {
     if (editingEvent && editingEvent.id) {
       updateEvent(editingEvent.id, payload);
-      showToast('Event updated successfully!');
+      showToast('Event updated successfully.');
     } else {
       addEvent(payload);
-      showToast('New event created and published!');
+      showToast('New event created.');
     }
   };
 
   const handleDeleteEvent = (id) => {
     deleteEvent(id);
-    showToast('Event deleted successfully.');
+    showToast('Event removed.');
   };
 
   const handleDeleteRegistration = (id) => {
     deleteRegistration(id);
-    showToast('Registration cancelled.');
+    showToast('Registration deleted.');
   };
 
   const handleToggleAttendance = (id) => {
     const updated = toggleRegistrationAttendance(id);
-    showToast(updated.attended ? 'Student marked present!' : 'Attendance removed.');
+    showToast(updated.attended ? 'Marked present.' : 'Attendance unmarked.');
   };
 
   const handleResetData = () => {
     if (window.confirm('Reset all events and registrations to default demo data?')) {
       resetToDemoData();
-      showToast('Reset to default demo data.');
+      showToast('Reset to demo data.');
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col font-sans">
       
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-5 right-5 z-50 animate-in slide-in-from-bottom-5 duration-300">
-          <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-slate-900 border border-indigo-500/40 text-white shadow-2xl text-xs sm:text-sm font-medium">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-5 right-5 z-50 animate-in slide-in-from-bottom-5 duration-200">
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-gray-300 text-gray-900 shadow-md text-xs sm:text-sm font-medium">
+            <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0" />
             <span>{toastMessage.message}</span>
           </div>
         </div>
@@ -190,12 +186,12 @@ export default function App() {
         registrationCount={registrations.length}
       />
 
-      {/* Main Content Areas */}
+      {/* Main Content */}
       <main className="flex-1">
         
         {/* VIEW 1: HOME PAGE */}
         {currentView === 'home' && (
-          <div className="space-y-12 sm:space-y-16">
+          <div>
             
             {/* Hero Section */}
             <Hero 
@@ -220,23 +216,23 @@ export default function App() {
               />
             )}
 
-            {/* Upcoming Events Grid Preview */}
+            {/* Upcoming Events Preview */}
             <section className="py-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                 <div>
-                  <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
-                    <Calendar className="w-4 h-4" />
-                    <span>Campus Calendar</span>
+                  <div className="flex items-center gap-1.5 text-blue-600 text-xs font-semibold uppercase tracking-wider mb-0.5">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>Schedule</span>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                    Upcoming Club Events
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    Upcoming Events
                   </h2>
                 </div>
                 <button
                   onClick={() => setCurrentView('events')}
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-indigo-400 hover:text-indigo-300 transition-colors"
+                  className="inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
                 >
-                  <span>View All {events.length} Events</span>
+                  <span>View All ({events.length})</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -254,7 +250,7 @@ export default function App() {
               </div>
             </section>
 
-            {/* Club Introduction & Pillars */}
+            {/* Club Introduction */}
             <ClubIntroduction 
               onExploreEvents={() => setCurrentView('events')}
             />
@@ -264,19 +260,14 @@ export default function App() {
 
         {/* VIEW 2: EVENTS PAGE */}
         {currentView === 'events' && (
-          <div className="py-10 sm:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-8 sm:py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             
-            {/* Header banner */}
-            <div className="mb-8">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-2">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>CodeChef ABESEC Schedule</span>
-              </div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                All Campus Events & Hackathons
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+                All Campus Events
               </h1>
-              <p className="text-sm sm:text-base text-slate-400 mt-2 max-w-2xl">
-                Browse upcoming contests, workshops, bootcamps, and technical talks organized for ABESEC students. Instant registration with verified digital passes.
+              <p className="text-sm text-gray-600 mt-1 max-w-xl">
+                Browse and register for hackathons, workshops, and coding contests organized by CodeChef ABESEC.
               </p>
             </div>
 
@@ -293,13 +284,11 @@ export default function App() {
 
             {/* Event Cards Grid */}
             {filteredEvents.length === 0 ? (
-              <div className="py-20 text-center rounded-3xl bg-slate-900/50 border border-slate-800 p-8">
-                <div className="w-16 h-16 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center mx-auto mb-4">
-                  <Search className="w-8 h-8" />
-                </div>
-                <h3 className="text-lg font-bold text-white">No events found</h3>
-                <p className="text-sm text-slate-400 mt-1 max-w-md mx-auto">
-                  We couldn't find any events matching your selected criteria. Try adjusting your search keywords or category filters.
+              <div className="py-16 text-center bg-white border border-gray-200 rounded-xl p-6">
+                <Search className="w-8 h-8 text-gray-400 mx-auto mb-2" />
+                <h3 className="text-base font-semibold text-gray-900">No events found</h3>
+                <p className="text-xs text-gray-500 mt-1">
+                  Try adjusting your search query or selected category filter.
                 </p>
                 <button
                   onClick={() => {
@@ -307,9 +296,9 @@ export default function App() {
                     setSelectedCategory('All');
                     setSelectedStatus('All');
                   }}
-                  className="mt-5 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white transition-colors"
+                  className="mt-4 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                 >
-                  Clear All Filters
+                  Clear Filters
                 </button>
               </div>
             ) : (
@@ -331,7 +320,7 @@ export default function App() {
 
         {/* VIEW 3: ABOUT CLUB PAGE */}
         {currentView === 'about' && (
-          <div className="pt-6">
+          <div>
             <ClubIntroduction 
               onExploreEvents={() => setCurrentView('events')}
             />
@@ -380,7 +369,7 @@ export default function App() {
         onRegister={(evt) => setRegisterEvent(evt)}
       />
 
-      {/* DIGITAL TICKET / PASS MODAL */}
+      {/* DIGITAL TICKET PASS MODAL */}
       {ticketModalState && (
         <TicketModal 
           isOpen={Boolean(ticketModalState)}

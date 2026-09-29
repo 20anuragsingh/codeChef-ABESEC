@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, X, Filter, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Search, X, Filter } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../data/mockEvents';
 
 export const SearchAndFilter = ({ 
@@ -20,39 +20,39 @@ export const SearchAndFilter = ({
   };
 
   return (
-    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl mb-8 space-y-4">
+    <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 shadow-xs mb-8 space-y-4">
       
       {/* Top Search Input */}
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-          <Search className="w-5 h-5" />
+        <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+          <Search className="w-4 h-4" />
         </div>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search events by name, keywords, venue, or topics..."
-          className="w-full pl-11 pr-10 py-3 bg-slate-950/80 border border-slate-700/80 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+          className="w-full pl-10 pr-9 py-2.5 bg-white border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
         />
         {searchTerm && (
           <button
             onClick={() => setSearchTerm('')}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white"
-            title="Clear search query"
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+            title="Clear search"
           >
             <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      {/* Filter Row: Categories + Status */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pt-1">
+      {/* Filter Row */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-1">
         
-        {/* Category Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-          <div className="text-xs font-semibold text-slate-400 mr-1 flex items-center gap-1 shrink-0">
-            <Filter className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="hidden sm:inline">Category:</span>
+        {/* Category Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+          <div className="text-xs font-semibold text-gray-500 mr-1 flex items-center gap-1 shrink-0">
+            <Filter className="w-3.5 h-3.5 text-blue-600" />
+            <span>Category:</span>
           </div>
 
           {EVENT_CATEGORIES.map((cat) => {
@@ -61,10 +61,10 @@ export const SearchAndFilter = ({
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all duration-200 border ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors border ${
                   isSelected
-                    ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm shadow-indigo-600/30 font-semibold'
-                    : 'bg-slate-800/80 text-slate-300 border-slate-700 hover:bg-slate-750 hover:text-white'
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                 }`}
               >
                 {cat}
@@ -73,42 +73,40 @@ export const SearchAndFilter = ({
           })}
         </div>
 
-        {/* Status Toggle & Clear Actions */}
-        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+        {/* Status Toggle & Reset */}
+        <div className="flex items-center justify-between sm:justify-end gap-2.5 shrink-0">
           
-          {/* Status selector */}
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-xl border border-slate-800 text-xs">
+          <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-lg border border-gray-200 text-xs">
             <button
               onClick={() => setSelectedStatus('All')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
-                selectedStatus === 'All' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'
+              className={`px-2.5 py-1 rounded font-medium transition-colors ${
+                selectedStatus === 'All' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              All Events
+              All
             </button>
             <button
               onClick={() => setSelectedStatus('Upcoming')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
-                selectedStatus === 'Upcoming' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-slate-200'
+              className={`px-2.5 py-1 rounded font-medium transition-colors ${
+                selectedStatus === 'Upcoming' ? 'bg-white text-blue-600 font-semibold shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Upcoming
             </button>
             <button
               onClick={() => setSelectedStatus('Completed')}
-              className={`px-2.5 py-1 rounded-lg font-medium transition-colors ${
-                selectedStatus === 'Completed' ? 'bg-slate-800 text-white' : 'text-slate-400 hover:text-slate-200'
+              className={`px-2.5 py-1 rounded font-medium transition-colors ${
+                selectedStatus === 'Completed' ? 'bg-white text-gray-900 shadow-xs' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               Past
             </button>
           </div>
 
-          {/* Clear Filters button */}
           {hasActiveFilters && (
             <button
               onClick={clearAllFilters}
-              className="text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium transition-colors ml-1"
+              className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 font-medium transition-colors ml-1"
             >
               <X className="w-3.5 h-3.5" />
               <span>Reset</span>
@@ -120,11 +118,11 @@ export const SearchAndFilter = ({
       </div>
 
       {/* Results summary bar */}
-      <div className="text-xs text-slate-400 flex items-center justify-between pt-2 border-t border-slate-800/60 font-mono">
+      <div className="text-xs text-gray-500 pt-2 border-t border-gray-100 flex items-center justify-between">
         <span>
-          Showing <strong className="text-indigo-400">{totalResults}</strong> {totalResults === 1 ? 'event' : 'events'}
-          {selectedCategory !== 'All' && <span> in <strong className="text-white">{selectedCategory}</strong></span>}
-          {searchTerm && <span> matching "<strong className="text-amber-300">{searchTerm}</strong>"</span>}
+          Showing <strong>{totalResults}</strong> {totalResults === 1 ? 'event' : 'events'}
+          {selectedCategory !== 'All' && <span> in <strong>{selectedCategory}</strong></span>}
+          {searchTerm && <span> matching "<strong>{searchTerm}</strong>"</span>}
         </span>
       </div>
 

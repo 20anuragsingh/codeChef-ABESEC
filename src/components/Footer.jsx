@@ -3,89 +3,86 @@ import { Code2, MessageSquare, ShieldCheck } from 'lucide-react';
 
 export const Footer = ({ onNavigate, onOpenAdmin }) => {
   return (
-    <footer className="border-t border-slate-900 bg-slate-950 text-slate-400 text-xs sm:text-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <footer className="border-t border-gray-200 bg-gray-50 text-gray-600 text-xs sm:text-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 pb-12 border-b border-slate-900">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-8 border-b border-gray-200">
           
           {/* Brand Info */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-amber-500 p-0.5">
-                <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-                  <Code2 className="w-5 h-5 text-indigo-400" />
-                </div>
+          <div className="lg:col-span-2 space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white">
+                <Code2 className="w-4 h-4" />
               </div>
-              <span className="font-extrabold text-base text-white">CodeChef ABESEC</span>
+              <span className="font-bold text-base text-gray-900">CodeChef ABESEC</span>
             </div>
             
-            <p className="text-slate-400 leading-relaxed text-xs max-w-sm">
-              Official student-run competitive programming and software engineering chapter at ABES Engineering College. Fostering problem solving, open source contributions, and hackathon victories.
+            <p className="text-gray-500 leading-relaxed text-xs max-w-sm">
+              Student chapter at ABES Engineering College for competitive programming, workshops, and campus hackathons.
             </p>
 
-            <div className="text-xs text-slate-500">
+            <div className="text-xs text-gray-500">
               📍 19th KM Stone, NH-09, Ghaziabad, UP 201009
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-bold text-white uppercase text-xs tracking-wider mb-3">
+            <h4 className="font-semibold text-gray-900 uppercase text-xs tracking-wider mb-3">
               Navigation
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onNavigate('home')} className="hover:text-indigo-400 transition-colors">
-                  Home Overview
+                <button onClick={() => onNavigate('home')} className="hover:text-blue-600 transition-colors">
+                  Home
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('events')} className="hover:text-indigo-400 transition-colors">
-                  All Campus Events
+                <button onClick={() => onNavigate('events')} className="hover:text-blue-600 transition-colors">
+                  Events
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigate('about')} className="hover:text-indigo-400 transition-colors">
-                  About the Chapter
+                <button onClick={() => onNavigate('about')} className="hover:text-blue-600 transition-colors">
+                  About Club
                 </button>
               </li>
               <li>
-                <button onClick={onOpenAdmin} className="text-amber-400 hover:text-amber-300 font-semibold transition-colors flex items-center gap-1">
+                <button onClick={onOpenAdmin} className="text-blue-600 hover:text-blue-800 font-semibold transition-colors flex items-center gap-1">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>Admin Portal</span>
+                  <span>Admin Dashboard</span>
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Event Categories */}
+          {/* Categories */}
           <div>
-            <h4 className="font-bold text-white uppercase text-xs tracking-wider mb-3">
+            <h4 className="font-semibold text-gray-900 uppercase text-xs tracking-wider mb-3">
               Categories
             </h4>
-            <ul className="space-y-2 text-xs text-slate-400">
-              <li>Hackathons & Ideathons</li>
-              <li>Competitive Programming (CP)</li>
-              <li>Web & Blockchain Bootcamps</li>
-              <li>AI & Agentic Tech Talks</li>
-              <li>Campus Rating Booster Contests</li>
+            <ul className="space-y-2 text-xs text-gray-500">
+              <li>Hackathons</li>
+              <li>Competitive Programming</li>
+              <li>Workshops</li>
+              <li>Tech Talks</li>
             </ul>
           </div>
 
-          {/* Community & Connect */}
+          {/* Social Links */}
           <div>
-            <h4 className="font-bold text-white uppercase text-xs tracking-wider mb-3">
-              Connect With Us
+            <h4 className="font-semibold text-gray-900 uppercase text-xs tracking-wider mb-3">
+              Connect
             </h4>
-            <p className="text-xs text-slate-400 mb-3">
-              Join 1,200+ college peers on Discord & WhatsApp for instant contest reminders.
+            <p className="text-xs text-gray-500 mb-3">
+              Follow our community on social channels:
             </p>
             <div className="flex items-center gap-2">
               <a 
                 href="https://github.com/20anuragsingh/codeChef-ABESEC" 
                 target="_blank" 
                 rel="noreferrer"
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors"
+                className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400 transition-colors"
                 aria-label="GitHub Repository"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -96,7 +93,7 @@ export const Footer = ({ onNavigate, onOpenAdmin }) => {
                 href="https://linkedin.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors"
+                className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400 transition-colors"
                 aria-label="LinkedIn"
               >
                 <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
@@ -107,8 +104,8 @@ export const Footer = ({ onNavigate, onOpenAdmin }) => {
                 href="https://discord.com" 
                 target="_blank" 
                 rel="noreferrer"
-                className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-slate-700 transition-colors"
-                aria-label="Discord Community"
+                className="p-2 rounded-lg bg-white border border-gray-300 text-gray-700 hover:text-gray-900 hover:border-gray-400 transition-colors"
+                aria-label="Discord"
               >
                 <MessageSquare className="w-4 h-4" />
               </a>
@@ -117,13 +114,12 @@ export const Footer = ({ onNavigate, onOpenAdmin }) => {
 
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
           <div>
-            © {new Date().getFullYear()} CodeChef ABESEC Chapter. Developed for ABES Engineering College.
+            © {new Date().getFullYear()} CodeChef ABESEC Chapter.
           </div>
-          <div className="flex items-center gap-1 text-slate-400">
-            <span>Built with passion by the student developer team</span>
+          <div>
+            ABES Engineering College, Ghaziabad
           </div>
         </div>
 

@@ -3,12 +3,7 @@ import {
   Calendar, 
   Clock, 
   MapPin, 
-  Users, 
-  ArrowRight, 
-  Sparkles,
-  Trophy,
-  CheckCircle,
-  ExternalLink
+  Users
 } from 'lucide-react';
 
 export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDetails }) => {
@@ -17,61 +12,34 @@ export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDeta
   const isFull = registrationCount >= capacity;
   const percentFull = Math.min(100, Math.round((registrationCount / capacity) * 100));
 
-  // Category color mapper
-  const getCategoryColor = (cat) => {
-    switch (cat) {
-      case 'Hackathon':
-        return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
-      case 'Competitive Programming':
-        return 'bg-indigo-500/20 text-indigo-300 border-indigo-500/40';
-      case 'Workshop':
-        return 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40';
-      case 'Tech Talk':
-        return 'bg-purple-500/20 text-purple-300 border-purple-500/40';
-      default:
-        return 'bg-slate-700/50 text-slate-300 border-slate-600';
-    }
-  };
-
   return (
-    <div className="flex flex-col rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-indigo-950/30 group">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-xs hover:shadow-sm transition-shadow flex flex-col justify-between">
       
-      {/* Event Image & Badges */}
-      <div className="relative h-48 w-full overflow-hidden bg-slate-950">
+      {/* Event Cover Image */}
+      <div className="relative h-44 w-full bg-gray-100 overflow-hidden">
         <img 
           src={event.bannerImage || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80"} 
           alt={event.title}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent" />
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-          <span className={`px-2.5 py-1 rounded-lg text-xs font-bold border backdrop-blur-md ${getCategoryColor(event.category)}`}>
+          <span className="px-2.5 py-0.5 rounded text-xs font-semibold bg-white text-gray-800 shadow-xs border border-gray-200">
             {event.category}
           </span>
-          <span className="px-2.5 py-1 rounded-lg text-xs font-semibold bg-slate-950/80 backdrop-blur-md text-slate-200 border border-slate-700">
+          <span className="px-2 py-0.5 rounded text-xs font-medium bg-gray-900 text-white">
             {event.mode || 'Offline'}
           </span>
         </div>
 
-        {/* Featured Tag if applicable */}
-        {event.featured && (
-          <div className="absolute bottom-3 left-3">
-            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-bold bg-amber-500 text-slate-950 shadow-md">
-              <Sparkles className="w-3 h-3" />
-              Featured Event
-            </span>
-          </div>
-        )}
-
-        {/* Status tag */}
-        <div className="absolute bottom-3 right-3">
-          <span className={`px-2 py-0.5 rounded-md text-[11px] font-semibold ${
+        {/* Status Tag */}
+        <div className="absolute bottom-2.5 right-2.5">
+          <span className={`px-2 py-0.5 rounded text-xs font-medium ${
             isPast 
-              ? 'bg-slate-800 text-slate-400 border border-slate-700' 
-              : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+              ? 'bg-gray-100 text-gray-600 border border-gray-200' 
+              : 'bg-green-50 text-green-700 border border-green-200'
           }`}>
             {isPast ? 'Concluded' : 'Upcoming'}
           </span>
@@ -82,78 +50,70 @@ export const EventCard = ({ event, registrationCount = 0, onRegister, onViewDeta
       <div className="p-5 flex-1 flex flex-col justify-between">
         <div>
           {/* Date & Time */}
-          <div className="flex items-center gap-2 text-xs font-medium text-indigo-400 mb-2">
-            <Calendar className="w-3.5 h-3.5 shrink-0" />
+          <div className="flex items-center gap-2 text-xs font-medium text-blue-600 mb-2">
+            <Calendar className="w-3.5 h-3.5" />
             <span>{event.date}</span>
-            <span className="text-slate-600">•</span>
-            <Clock className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-gray-300">•</span>
+            <Clock className="w-3.5 h-3.5" />
             <span>{event.time}</span>
           </div>
 
-          {/* Event Name */}
+          {/* Event Title */}
           <h3 
             onClick={() => onViewDetails(event)}
-            className="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors cursor-pointer line-clamp-2 leading-snug"
+            className="text-base font-bold text-gray-900 hover:text-blue-600 transition-colors cursor-pointer line-clamp-2 leading-snug"
           >
             {event.title}
           </h3>
 
           {/* Venue */}
-          <div className="mt-2.5 flex items-start gap-1.5 text-xs text-slate-400">
-            <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0 mt-0.5" />
+          <div className="mt-2 flex items-start gap-1.5 text-xs text-gray-500">
+            <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0 mt-0.5" />
             <span className="line-clamp-1">{event.venue}</span>
           </div>
 
           {/* Description */}
-          <p className="mt-3 text-xs sm:text-sm text-slate-300 line-clamp-3 leading-relaxed">
+          <p className="mt-2.5 text-xs sm:text-sm text-gray-600 line-clamp-3 leading-relaxed">
             {event.shortDescription || event.description}
           </p>
 
-          {/* Capacity and Registration count */}
-          <div className="mt-4 pt-3 border-t border-slate-800/80">
-            <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
-              <span className="flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5 text-indigo-400" />
-                <span><strong className="text-white">{registrationCount}</strong> registered</span>
+          {/* Capacity Progress */}
+          <div className="mt-4 pt-3 border-t border-gray-100">
+            <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
+              <span className="flex items-center gap-1">
+                <Users className="w-3.5 h-3.5 text-gray-400" />
+                <span>{registrationCount} registered</span>
               </span>
-              <span className="text-[11px] font-mono text-slate-400">
-                {capacity - registrationCount > 0 ? `${capacity - registrationCount} seats left` : 'Fully Booked'}
-              </span>
+              <span>{capacity - registrationCount > 0 ? `${capacity - registrationCount} seats left` : 'Full'}</span>
             </div>
-            <div className="w-full h-1.5 rounded-full bg-slate-800 overflow-hidden">
+            <div className="w-full h-1.5 rounded-full bg-gray-100 overflow-hidden">
               <div 
-                className={`h-full rounded-full transition-all duration-300 ${
-                  percentFull >= 90 ? 'bg-amber-500' : 'bg-indigo-500'
-                }`}
+                className="h-full bg-blue-600 rounded-full"
                 style={{ width: `${percentFull}%` }}
               />
             </div>
           </div>
         </div>
 
-        {/* Buttons / Card Action Footer */}
-        <div className="mt-5 pt-4 border-t border-slate-800 flex items-center gap-2">
+        {/* Buttons Footer */}
+        <div className="mt-5 pt-3 border-t border-gray-100 flex items-center gap-2">
           <button
             onClick={() => onRegister(event)}
             disabled={isPast || isFull}
-            className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center gap-1.5 ${
+            className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs transition-colors ${
               isPast
-                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
                 : isFull
-                ? 'bg-slate-800 text-amber-400/90 cursor-not-allowed border border-amber-500/20'
-                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/20 active:scale-[0.98]'
+                ? 'bg-gray-100 text-gray-500 cursor-not-allowed border border-gray-200'
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>
-              {isPast ? 'Closed' : isFull ? 'Event Full' : 'Register Now'}
-            </span>
+            {isPast ? 'Closed' : isFull ? 'Event Full' : 'Register Now'}
           </button>
 
           <button
             onClick={() => onViewDetails(event)}
-            className="py-2.5 px-3 rounded-xl font-semibold text-xs text-slate-300 bg-slate-800 hover:bg-slate-700/90 hover:text-white border border-slate-700 transition-colors"
-            title="View complete event description and details"
+            className="py-2 px-3 rounded-lg font-medium text-xs text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 transition-colors"
           >
             Details
           </button>

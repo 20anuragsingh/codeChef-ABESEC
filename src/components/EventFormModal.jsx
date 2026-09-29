@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  X, 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Trophy, 
-  Users, 
-  Tag, 
-  Image as ImageIcon,
-  Sparkles,
-  AlertCircle
-} from 'lucide-react';
+import { X } from 'lucide-react';
 import { EVENT_CATEGORIES } from '../data/mockEvents';
 
-// Preset high quality cover images for easy selection by admin
 const PRESET_IMAGES = [
-  { label: 'Hackathon / Code Battle', url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80' },
-  { label: 'Coding / Programming Lab', url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80' },
-  { label: 'Web3 & Blockchain', url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80' },
-  { label: 'AI & Data Science', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80' },
-  { label: 'Auditorium & Tech Talk', url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80' }
+  { label: 'Hackathon', url: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80' },
+  { label: 'Programming', url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1200&q=80' },
+  { label: 'Web3', url: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=1200&q=80' },
+  { label: 'AI & Data', url: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80' },
+  { label: 'Auditorium', url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&w=1200&q=80' }
 ];
 
 export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
@@ -65,7 +53,6 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
         status: initialData.status || 'Upcoming'
       });
     } else {
-      // Default initial date 7 days from now
       const defaultDate = new Date();
       defaultDate.setDate(defaultDate.getDate() + 7);
       const yyyy = defaultDate.getFullYear();
@@ -137,64 +124,59 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/40 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
       <div 
-        className="relative w-full max-w-2xl bg-slate-900 border border-slate-700 rounded-3xl shadow-2xl overflow-hidden my-8"
+        className="relative w-full max-w-2xl bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Gradient */}
-        <div className="h-1.5 bg-gradient-to-r from-amber-500 via-indigo-500 to-amber-500" />
-
         {/* Header */}
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-5 border-b border-gray-200 flex items-center justify-between">
           <div>
-            <span className="text-xs font-mono font-bold uppercase tracking-wider text-amber-400">
-              Admin Portal
-            </span>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white mt-1">
-              {isEditMode ? 'Edit Event Details' : 'Create New Club Event'}
+            <h2 className="text-lg font-bold text-gray-900">
+              {isEditMode ? 'Edit Event' : 'Add New Event'}
             </h2>
+            <p className="text-xs text-gray-500">Provide the event details and schedule</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto">
+        <form onSubmit={handleSubmit} className="p-5 space-y-4 max-h-[75vh] overflow-y-auto">
           
           {/* Title */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Event Title <span className="text-amber-400">*</span>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Event Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              placeholder="e.g. CodeClash 2026: Annual Inter-College Hackathon"
-              className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                errors.title ? 'border-red-500 focus:ring-red-500' : 'border-slate-700 focus:ring-indigo-500'
+              placeholder="e.g. CodeClash 2026: Campus Hackathon"
+              className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                errors.title ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
               }`}
             />
-            {errors.title && <p className="text-xs text-red-400 mt-1">{errors.title}</p>}
+            {errors.title && <p className="text-xs text-red-600 mt-1">{errors.title}</p>}
           </div>
 
           {/* Category & Mode */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-gray-700 mb-1">
                 Category
               </label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 {EVENT_CATEGORIES.filter((c) => c !== 'All').map((cat) => (
                   <option key={cat} value={cat}>
@@ -205,43 +187,43 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+              <label className="block text-xs font-medium text-gray-700 mb-1">
                 Event Mode
               </label>
               <select
                 name="mode"
                 value={formData.mode}
                 onChange={handleChange}
-                className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
-                <option value="Offline">Offline (Campus Lab / Audi)</option>
-                <option value="Online">Online (Virtual / Discord)</option>
-                <option value="Hybrid">Hybrid (Offline + Live Stream)</option>
+                <option value="Offline">Offline (Campus)</option>
+                <option value="Online">Online (Virtual)</option>
+                <option value="Hybrid">Hybrid</option>
               </select>
             </div>
           </div>
 
           {/* Date, Time & Capacity */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Date <span className="text-amber-400">*</span>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Date <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleChange}
-                className={`w-full px-3 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                  errors.date ? 'border-red-500' : 'border-slate-700 focus:ring-indigo-500'
+                className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                  errors.date ? 'border-red-500' : 'border-gray-300 focus:ring-blue-500'
                 }`}
               />
-              {errors.date && <p className="text-xs text-red-400 mt-1">{errors.date}</p>}
+              {errors.date && <p className="text-xs text-red-600 mt-1">{errors.date}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Time <span className="text-amber-400">*</span>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Time <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
@@ -249,16 +231,16 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
                 value={formData.time}
                 onChange={handleChange}
                 placeholder="e.g. 10:00 AM"
-                className={`w-full px-3 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                  errors.time ? 'border-red-500' : 'border-slate-700 focus:ring-indigo-500'
+                className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                  errors.time ? 'border-red-500' : 'border-gray-300 focus:ring-blue-500'
                 }`}
               />
-              {errors.time && <p className="text-xs text-red-400 mt-1">{errors.time}</p>}
+              {errors.time && <p className="text-xs text-red-600 mt-1">{errors.time}</p>}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Max Capacity <span className="text-amber-400">*</span>
+              <label className="block text-xs font-medium text-gray-700 mb-1">
+                Capacity <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -266,84 +248,84 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
                 min="1"
                 value={formData.capacity}
                 onChange={handleChange}
-                className={`w-full px-3 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                  errors.capacity ? 'border-red-500' : 'border-slate-700 focus:ring-indigo-500'
+                className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                  errors.capacity ? 'border-red-500' : 'border-gray-300 focus:ring-blue-500'
                 }`}
               />
-              {errors.capacity && <p className="text-xs text-red-400 mt-1">{errors.capacity}</p>}
+              {errors.capacity && <p className="text-xs text-red-600 mt-1">{errors.capacity}</p>}
             </div>
           </div>
 
           {/* Venue */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Venue Location <span className="text-amber-400">*</span>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Venue <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="venue"
               value={formData.venue}
               onChange={handleChange}
-              placeholder="e.g. Radhakrishnan Auditorium & Bhabha Labs, ABESEC"
-              className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                errors.venue ? 'border-red-500' : 'border-slate-700 focus:ring-indigo-500'
+              placeholder="e.g. Radhakrishnan Auditorium, ABESEC"
+              className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                errors.venue ? 'border-red-500' : 'border-gray-300 focus:ring-blue-500'
               }`}
             />
-            {errors.venue && <p className="text-xs text-red-400 mt-1">{errors.venue}</p>}
+            {errors.venue && <p className="text-xs text-red-600 mt-1">{errors.venue}</p>}
           </div>
 
           {/* Short Tagline */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Short Tagline / Preview
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Short Summary
             </label>
             <input
               type="text"
               name="shortDescription"
               value={formData.shortDescription}
               onChange={handleChange}
-              placeholder="A punchy 1-line overview for event cards"
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="Brief summary for event cards"
+              className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
 
-          {/* Full Description */}
+          {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Full Description & Schedule <span className="text-amber-400">*</span>
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Full Description <span className="text-red-500">*</span>
             </label>
             <textarea
               name="description"
-              rows={4}
+              rows={3}
               value={formData.description}
               onChange={handleChange}
-              placeholder="Explain the event agenda, topics covered, eligibility, rules, and expectations..."
-              className={`w-full px-3.5 py-2.5 bg-slate-950 border rounded-xl text-white text-sm focus:outline-none focus:ring-2 ${
-                errors.description ? 'border-red-500' : 'border-slate-700 focus:ring-indigo-500'
+              placeholder="Detailed overview and rules..."
+              className={`w-full px-3 py-2 bg-white border rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 ${
+                errors.description ? 'border-red-500' : 'border-gray-300 focus:ring-blue-500'
               }`}
             />
-            {errors.description && <p className="text-xs text-red-400 mt-1">{errors.description}</p>}
+            {errors.description && <p className="text-xs text-red-600 mt-1">{errors.description}</p>}
           </div>
 
-          {/* Perks & Prizes */}
+          {/* Prizes */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Prizes / Goodies / Certificates
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Prizes / Goodies
             </label>
             <input
               type="text"
               name="prizes"
               value={formData.prizes}
               onChange={handleChange}
-              placeholder="e.g. ₹50,000 Cash Pool + Goodies + Certificates"
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="e.g. Cash Prizes + Certificates"
+              className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
 
-          {/* Cover Image Preset Selector */}
+          {/* Presets */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Cover Image URL or Quick Presets
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Cover Image URL
             </label>
             <input
               type="url"
@@ -351,18 +333,18 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
               value={formData.bannerImage}
               onChange={handleChange}
               placeholder="https://..."
-              className="w-full px-3.5 py-2 bg-slate-950 border border-slate-700 rounded-xl text-white text-xs font-mono mb-2"
+              className="w-full px-3 py-1.5 bg-white border border-gray-300 rounded-lg text-gray-900 text-xs mb-2"
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {PRESET_IMAGES.map((preset, idx) => (
                 <button
                   type="button"
                   key={idx}
                   onClick={() => setFormData((prev) => ({ ...prev, bannerImage: preset.url }))}
-                  className={`text-[11px] px-2.5 py-1 rounded-lg border transition-all ${
+                  className={`text-xs px-2 py-0.5 rounded border transition-colors ${
                     formData.bannerImage === preset.url
-                      ? 'bg-indigo-600 text-white border-indigo-500 font-semibold'
-                      : 'bg-slate-800 text-slate-300 border-slate-700 hover:text-white'
+                      ? 'bg-blue-50 text-blue-700 border-blue-300 font-medium'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
                   }`}
                 >
                   {preset.label}
@@ -373,20 +355,20 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
 
           {/* Tags */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              Topic Tags (comma-separated)
+            <label className="block text-xs font-medium text-gray-700 mb-1">
+              Tags (comma-separated)
             </label>
             <input
               type="text"
               name="tagsString"
               value={formData.tagsString}
               onChange={handleChange}
-              placeholder="e.g. Dynamic Programming, ICPC, Python"
-              className="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              placeholder="e.g. Coding, Contest, DSA"
+              className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-gray-900 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
           </div>
 
-          {/* Checkboxes: Featured & Status */}
+          {/* Featured & Status */}
           <div className="pt-2 flex flex-wrap items-center gap-6">
             <label className="flex items-center gap-2 cursor-pointer">
               <input
@@ -394,21 +376,20 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
                 name="featured"
                 checked={formData.featured}
                 onChange={handleChange}
-                className="w-4 h-4 rounded text-indigo-600 bg-slate-950 border-slate-700 focus:ring-indigo-500"
+                className="w-4 h-4 rounded text-blue-600 border-gray-300 focus:ring-blue-500"
               />
-              <span className="text-xs font-semibold text-amber-300 flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5" />
-                Feature on Home Page Hero Spotlight
+              <span className="text-xs font-medium text-gray-700">
+                Feature in spotlight on home page
               </span>
             </label>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-slate-400">Status:</span>
+              <span className="text-xs text-gray-500">Status:</span>
               <select
                 name="status"
                 value={formData.status}
                 onChange={handleChange}
-                className="px-2.5 py-1 bg-slate-950 border border-slate-700 rounded-lg text-white text-xs"
+                className="px-2 py-1 bg-white border border-gray-300 rounded text-xs text-gray-900"
               >
                 <option value="Upcoming">Upcoming</option>
                 <option value="Completed">Completed</option>
@@ -417,17 +398,17 @@ export const EventFormModal = ({ isOpen, onClose, onSave, initialData }) => {
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-6 border-t border-slate-800 flex items-center justify-end gap-3">
+          <div className="pt-4 border-t border-gray-200 flex items-center justify-end gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-2.5 rounded-xl font-medium text-sm text-slate-300 bg-slate-800 hover:bg-slate-700 transition-colors"
+              className="px-4 py-2 rounded-lg font-medium text-sm text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-6 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-600 text-white shadow-lg shadow-indigo-600/30 transition-all"
+              className="px-4 py-2 rounded-lg font-semibold text-sm bg-blue-600 hover:bg-blue-700 text-white transition-colors"
             >
               {isEditMode ? 'Save Changes' : 'Publish Event'}
             </button>

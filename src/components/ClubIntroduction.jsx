@@ -3,11 +3,8 @@ import {
   Code2, 
   Terminal, 
   Trophy, 
-  Users, 
   Cpu, 
-  Globe, 
   GraduationCap, 
-  Zap, 
   HelpCircle,
   ChevronRight
 } from 'lucide-react';
@@ -15,137 +12,114 @@ import {
 export const ClubIntroduction = ({ onExploreEvents }) => {
   const pillars = [
     {
-      icon: <Terminal className="w-6 h-6 text-indigo-400" />,
+      icon: <Terminal className="w-5 h-5 text-blue-600" />,
       title: "Competitive Programming",
-      desc: "Regular campus contest rounds, curated DSA question ladders, CodeChef contest editorials, and targeted training for ICPC & Global CP platforms."
+      desc: "Weekly contests, editorial breakdowns, and practice ladders for ICPC and CodeChef rated rounds."
     },
     {
-      icon: <Trophy className="w-6 h-6 text-amber-400" />,
-      title: "Flagship Hackathons",
-      desc: "Annual inter-college hackathons with real-world problem statements, ₹50,000+ prize pools, tech hardware labs, and mentor-guided hacking sprints."
+      icon: <Trophy className="w-5 h-5 text-blue-600" />,
+      title: "Hackathons & Contests",
+      desc: "Annual campus hackathons with cash prizes, team mentorship, and practical product building."
     },
     {
-      icon: <Cpu className="w-6 h-6 text-cyan-400" />,
-      title: "Bootcamps & AI Workshops",
-      desc: "Hands-on masterclasses covering Full Stack Engineering, Generative AI & Autonomous Agents, Systems Design, and Smart Contracts."
+      icon: <Cpu className="w-5 h-5 text-blue-600" />,
+      title: "Hands-on Workshops",
+      desc: "Masterclasses in Full Stack Development, AI engineering, Git workflows, and Web3."
     },
     {
-      icon: <GraduationCap className="w-6 h-6 text-emerald-400" />,
-      title: "Placement & Mentorship",
-      desc: "Direct guidance from alumni working at top tech firms (Google, Microsoft, Amazon, Razorpay) with resume reviews and mock technical interviews."
+      icon: <GraduationCap className="w-5 h-5 text-blue-600" />,
+      title: "Mentorship & Placements",
+      desc: "Guidance from senior students and alumni working across top tech companies."
     }
   ];
 
   const faqs = [
     {
-      q: "Who can participate in CodeChef ABESEC events?",
-      a: "All college students from any department (CSE, IT, AIML, DS, ECE, MCA, etc.) and any academic year are warmly welcome. Beginners are encouraged!"
+      q: "Who is eligible to participate in club events?",
+      a: "All students from ABESEC across all departments (CSE, IT, AIML, DS, ECE, MCA) and all years can participate. Beginners are welcome."
     },
     {
-      q: "Are the event registrations free?",
-      a: "Yes! All workshops, hackathons, and campus CP contests organized by the CodeChef ABESEC chapter are 100% free of charge for students."
+      q: "Are the registrations free?",
+      a: "Yes, all club contests, hackathons, and bootcamps are completely free for students."
     },
     {
-      q: "Do I get a participation certificate?",
-      a: "Yes, verified attendees receive an official digital participation certificate signed by the CodeChef chapter faculty coordinator and lead."
+      q: "Will I get a participation certificate?",
+      a: "Yes, verified participants who attend events receive official digital certificates."
     },
     {
       q: "How can I join the club core team?",
-      a: "Core team recruitments open at the start of each semester following the Chapter Orientation. Active participation in hackathons and contests increases your chances!"
+      a: "Recruitments open at the start of each semester following the Chapter Orientation."
     }
   ];
 
   return (
-    <section id="club-intro-section" className="py-16 sm:py-24 border-t border-slate-900 bg-slate-950/60">
+    <section id="club-intro-section" className="py-14 bg-white border-t border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold mb-3">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold mb-2">
             <Code2 className="w-3.5 h-3.5" />
-            <span>About CodeChef ABESEC</span>
+            <span>About The Club</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Building a Culture of Algorithmic Excellence
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">
+            About CodeChef ABESEC
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
-            The CodeChef ABESEC Student Chapter is a community-driven technology ecosystem at 
-            <strong> ABES Engineering College</strong>, dedicated to bridging the gap between academic theory 
-            and real-world software engineering mastery.
+          <p className="mt-3 text-sm sm:text-base text-gray-600 leading-relaxed">
+            The CodeChef ABESEC Student Chapter is a community at ABES Engineering College helping students build coding skills, solve algorithmic problems, and collaborate on tech projects.
           </p>
         </div>
 
         {/* 4 Pillars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
           {pillars.map((pillar, idx) => (
             <div 
               key={idx}
-              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-950/20 flex flex-col justify-between"
+              className="p-5 rounded-xl bg-gray-50 border border-gray-200 hover:border-gray-300 transition-colors"
             >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center mb-4 shadow-md">
-                  {pillar.icon}
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">{pillar.title}</h3>
-                <p className="text-sm text-slate-300 leading-relaxed">{pillar.desc}</p>
+              <div className="w-10 h-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center mb-3">
+                {pillar.icon}
               </div>
+              <h3 className="text-base font-bold text-gray-900 mb-1">{pillar.title}</h3>
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{pillar.desc}</p>
             </div>
           ))}
         </div>
 
-        {/* Chapter Journey & Campus Location Card */}
-        <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 p-8 sm:p-12 mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-8">
-              <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
-                Student Community Impact
-              </span>
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-white mt-1">
-                From Campus Labs to Global Leaderboards
-              </h3>
-              <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
-                Whether you're writing your first <code className="text-amber-300 bg-slate-900 px-1 py-0.5 rounded font-mono">print("Hello World")</code> or optimizing tree DP with bitmasking, CodeChef ABESEC provides the peer support, contest pressure, and mentor roadmap you need to thrive.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-4 text-xs font-medium text-slate-300">
-                <span className="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-slate-800">
-                  📍 Campus: ABESEC, 19th KM Stone, NH-09, Ghaziabad
-                </span>
-                <span className="px-3 py-1.5 rounded-lg bg-slate-950/80 border border-slate-800">
-                  ⭐ CodeChef Campus Chapter Rating: Grade A+
-                </span>
-              </div>
-            </div>
-            <div className="lg:col-span-4 flex lg:justify-end">
-              <button
-                onClick={onExploreEvents}
-                className="w-full sm:w-auto px-6 py-4 rounded-2xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-xl shadow-indigo-600/30 transition-all flex items-center justify-center gap-2"
-              >
-                <span>Join Our Next Event</span>
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+        {/* Community Info Banner */}
+        <div className="rounded-xl bg-blue-50/70 border border-blue-200 p-6 sm:p-8 mb-14 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h3 className="text-xl font-bold text-blue-950">
+              Ready to take part in our next event?
+            </h3>
+            <p className="text-sm text-blue-800 mt-1 max-w-xl">
+              Check out our upcoming schedule, register for free, and connect with peers at ABESEC Ghaziabad campus.
+            </p>
           </div>
+          <button
+            onClick={onExploreEvents}
+            className="px-5 py-2.5 rounded-lg font-semibold text-sm bg-blue-600 hover:bg-blue-700 text-white shrink-0 flex items-center gap-1.5 transition-colors"
+          >
+            <span>Explore Events</span>
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
 
         {/* FAQ Section */}
         <div>
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
-              <HelpCircle className="w-4 h-4 text-amber-400" />
-              <span>Got Questions?</span>
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-white">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <h3 className="text-xl font-bold text-gray-900">
               Frequently Asked Questions
             </h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto">
             {faqs.map((faq, idx) => (
-              <div key={idx} className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800">
-                <h4 className="text-sm sm:text-base font-bold text-white mb-2">
+              <div key={idx} className="p-4 rounded-lg bg-gray-50 border border-gray-200">
+                <h4 className="text-sm font-semibold text-gray-900 mb-1">
                   {faq.q}
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {faq.a}
                 </p>
               </div>
